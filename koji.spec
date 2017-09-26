@@ -25,8 +25,8 @@
 %endif
 
 Name: koji
-Version: 1.13.0
-Release: 4%{?dist}
+Version: 1.14.0
+Release: 1%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -444,6 +444,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 26 2017 Dennis Gilmore <dennis@ausil.us> - 1.14.0-1
+- update to upstream 1.14.0
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.13.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
