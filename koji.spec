@@ -26,13 +26,18 @@
 
 Name: koji
 Version: 1.14.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
 Group: Applications/System
 URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
+
+# Backported patches
+Patch0:   https://pagure.io/koji/pull-request/708.patch
+Patch1:   https://pagure.io/koji/c/5574ad7.patch
+Patch2:   https://pagure.io/koji/c/73ebc0c.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -239,6 +244,9 @@ koji-web is a web UI to the Koji system.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -444,6 +452,10 @@ fi
 %endif
 
 %changelog
+* Mon Dec 04 2017 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.14.0-2
+- Backport py3 keytab patch (PR#708)
+- Backport patches for exit code (issue#696)
+
 * Tue Sep 26 2017 Dennis Gilmore <dennis@ausil.us> - 1.14.0-1
 - update to upstream 1.14.0
 
