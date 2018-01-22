@@ -1,6 +1,6 @@
 # Enable Python 3 builds for Fedora + EPEL >5
 # NOTE: do **NOT** change 'epel' to 'rhel' here, as this spec is also
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?rhel} > 7
 %bcond_without python3
 # If the definition isn't available for python3_pkgversion, define it
 %{?!python3_pkgversion:%global python3_pkgversion 3}
@@ -26,7 +26,7 @@
 
 Name: koji
 Version: 1.14.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -454,6 +454,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 22 2018 Troy Dawson <tdawson@redhat.com> - 1.14.0-4
+- Update conditional
+
 * Thu Dec 07 2017 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.14.0-3
 - Backport py3 runroot encoding patch (PR#735)
 
