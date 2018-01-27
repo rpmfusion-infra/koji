@@ -25,8 +25,8 @@
 %endif
 
 Name: koji
-Version: 1.14.0
-Release: 4%{?dist}
+Version: 1.15.0
+Release: 1%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -35,10 +35,7 @@ URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Backported patches
-Patch0:   https://pagure.io/koji/pull-request/708.patch
-Patch1:   https://pagure.io/koji/c/5574ad7.patch
-Patch2:   https://pagure.io/koji/c/73ebc0c.patch
-Patch3:   https://pagure.io/koji/pull-request/735.patch
+Patch0:   https://pagure.io/koji/pull-request/735.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -246,9 +243,6 @@ koji-web is a web UI to the Koji system.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -454,6 +448,9 @@ fi
 %endif
 
 %changelog
+* Sat Jan 27 2018 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.15.0-1
+- Rebase to koji 1.15.0
+
 * Mon Jan 22 2018 Troy Dawson <tdawson@redhat.com> - 1.14.0-4
 - Update conditional
 
