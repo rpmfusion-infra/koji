@@ -26,7 +26,7 @@
 
 Name: koji
 Version: 1.15.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -138,7 +138,7 @@ License: LGPLv2 and GPLv2
 Requires: httpd
 Requires: mod_wsgi
 Requires: python-psycopg2
-Requires: %{name} = %{version}-%{release}
+Requires: python2-%{name} = %{version}-%{release}
 
 %description hub
 koji-hub is the XMLRPC interface to the koji database
@@ -147,7 +147,6 @@ koji-hub is the XMLRPC interface to the koji database
 Summary: Koji hub plugins
 Group: Applications/Internet
 License: LGPLv2
-Requires: %{name} = %{version}-%{release}
 Requires: %{name}-hub = %{version}-%{release}
 Requires: python-qpid >= 0.7
 Requires: python-qpid-proton
@@ -161,7 +160,7 @@ Summary: Koji RPM builder daemon
 Group: Applications/System
 License: LGPLv2 and GPLv2+
 #mergerepos (from createrepo) is GPLv2+
-Requires: %{name} = %{version}-%{release}
+Requires: python2-%{name} = %{version}-%{release}
 Requires: mock >= 0.9.14
 Requires(pre): /usr/sbin/useradd
 Requires: squashfs-tools
@@ -190,7 +189,7 @@ tasks that come through the Koji system.
 Summary: Koji virtual machine management daemon
 Group: Applications/System
 License: LGPLv2
-Requires: %{name} = %{version}-%{release}
+Requires: python2-%{name} = %{version}-%{release}
 %if %{use_systemd}
 Requires(post): systemd
 Requires(preun): systemd
@@ -215,7 +214,7 @@ Summary: Koji Utilities
 Group: Applications/Internet
 License: LGPLv2
 Requires: python-psycopg2
-Requires: %{name} = %{version}-%{release}
+Requires: python2-%{name} = %{version}-%{release}
 %if %{use_systemd}
 Requires(post): systemd
 Requires(preun): systemd
@@ -234,7 +233,7 @@ Requires: mod_wsgi
 Requires: mod_auth_gssapi
 Requires: python-psycopg2
 Requires: python-cheetah
-Requires: %{name} = %{version}-%{release}
+Requires: python2-%{name} = %{version}-%{release}
 Requires: python-krbV >= 1.0.13
 
 %description web
@@ -448,6 +447,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 12 2018 Owen Taylor <otaylor@redhat.com> - 1.15.0-3
+- Make hub, builder, etc, require python2-koji not koji
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.15.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
