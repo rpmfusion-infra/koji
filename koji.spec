@@ -260,9 +260,6 @@ make DESTDIR=$RPM_BUILD_ROOT PYTHON=python3 %{?install_opt} install
 sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/bin/koji
 %endif
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %files
 %defattr(-,root,root)
 %{_bindir}/*
