@@ -26,7 +26,7 @@
 
 Name: koji
 Version: 1.15.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -36,6 +36,7 @@ Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Backported patches
 Patch0:   https://pagure.io/koji/pull-request/735.patch
+Patch1:   https://pagure.io/koji/pull-request/794.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -242,6 +243,7 @@ koji-web is a web UI to the Koji system.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -282,16 +284,16 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %defattr(-,root,root)
 %{python2_sitelib}/koji_cli_plugins
 # we don't have config files for default plugins yet
-#%%dir %{_sysconfdir}/koji/plugins
-#%%config(noreplace) %{_sysconfdir}/koji/plugins/*.conf
+#%%dir %%{_sysconfdir}/koji/plugins
+#%%config(noreplace) %%{_sysconfdir}/koji/plugins/*.conf
 
 %if 0%{with python3}
 %files -n python%{python3_pkgversion}-%{name}-cli-plugins
 %defattr(-,root,root)
 %{python3_sitelib}/koji_cli_plugins
 # we don't have config files for default plugins yet
-#%%dir %{_sysconfdir}/koji/plugins
-#%%config(noreplace) %{_sysconfdir}/koji/plugins/*.conf
+#%%dir %%{_sysconfdir}/koji/plugins
+#%%config(noreplace) %%{_sysconfdir}/koji/plugins/*.conf
 %endif
 
 %files hub
@@ -387,7 +389,7 @@ fi
 %files vm
 %defattr(-,root,root)
 %{_sbindir}/kojivmd
-#dir %{_datadir}/kojivmd
+#dir %%{_datadir}/kojivmd
 %{_datadir}/kojivmd/kojikamid
 %if %{use_systemd}
 %{_unitdir}/kojivmd.service
@@ -444,6 +446,10 @@ fi
 %endif
 
 %changelog
+* Fri Feb 16 2018 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.15.0-4
+- Backport patch from PR#794
+- Fix macro escaping in comments
+
 * Mon Feb 12 2018 Owen Taylor <otaylor@redhat.com> - 1.15.0-3
 - Make hub, builder, etc, require python2-koji not koji
 
