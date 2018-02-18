@@ -26,7 +26,7 @@
 
 Name: koji
 Version: 1.15.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -37,6 +37,7 @@ Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 # Backported patches
 Patch0:   https://pagure.io/koji/pull-request/735.patch
 Patch1:   https://pagure.io/koji/pull-request/794.patch
+Patch2:   koji-fix808.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -244,6 +245,7 @@ koji-web is a web UI to the Koji system.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -446,6 +448,9 @@ fi
 %endif
 
 %changelog
+* Sun Feb 18 2018 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.15.0-5
+- Add  workaround patch for bug #808
+
 * Fri Feb 16 2018 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.15.0-4
 - Backport patch from PR#794
 - Fix macro escaping in comments

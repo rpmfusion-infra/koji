@@ -1,0 +1,15 @@
+diff -rup koji-1.15.0.orig/builder/kojid koji-1.15.0/builder/kojid
+--- koji-1.15.0.orig/builder/kojid	2018-02-18 12:34:29.680250204 +0100
++++ koji-1.15.0/builder/kojid	2018-02-18 12:35:33.857177069 +0100
+@@ -736,7 +736,10 @@ class BuildRoot(object):
+         # mock 1.4+ /tmp is tmpfs mounted on each run, different
+         # directory is needed for persistency
+         # 'within' is equivalent to broot.path_without_to_within(broot.tmpdir())
+-        base = "/builddir/tmp"
++        #
++        # *Note by puiterwijk*: This directory is "thebuilddir" rather than "Builddir"
++        # as it's in upstream koji to avoid upstream bug #808
++        base = "/thebuilddir/tmp"
+         if within:
+             return base
+         else:
