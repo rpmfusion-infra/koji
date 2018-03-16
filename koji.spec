@@ -26,7 +26,7 @@
 
 Name: koji
 Version: 1.15.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -39,6 +39,7 @@ Patch0:   https://pagure.io/koji/pull-request/735.patch
 Patch1:   https://pagure.io/koji/pull-request/794.patch
 Patch2:   koji-fix808.patch
 Patch3:   https://pagure.io/koji/pull-request/796.patch
+Patch4:   https://pagure.io/koji/pull-request/841.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -248,6 +249,7 @@ koji-web is a web UI to the Koji system.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -450,6 +452,9 @@ fi
 %endif
 
 %changelog
+* Fri Mar 16 2018 Kevin Fenzi <kevin@scrye.com> - 1.15.0-7
+- Backport PR #841 to allow configurable timeout for oz
+
 * Tue Feb 20 2018 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.15.0-6
 - Backport PR #796
 
