@@ -26,7 +26,7 @@
 
 Name: koji
 Version: 1.15.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -448,6 +448,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 18 2018 Miro Hrončok <mhroncok@redhat.com> - 1.15.1-2
+- Rebuilt for Python 3.7
+
 * Tue Apr 03 2018 Patrick Uiterwijk <puiterwijk@redhat.com> - 1.15.1-1
 - Rebase to 1.15.1
 - Fixes CVE-2018-1002150
