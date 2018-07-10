@@ -265,14 +265,12 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %endif
 
 %files
-%defattr(-,root,root)
 %{_bindir}/*
 %config(noreplace) /etc/koji.conf
 %dir /etc/koji.conf.d
 %doc docs Authors COPYING LGPL
 
 %files -n python2-%{name}
-%defattr(-,root,root)
 %{python2_sitelib}/%{name}
 %{python2_sitelib}/koji_cli
 
@@ -283,7 +281,6 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %endif
 
 %files -n python2-%{name}-cli-plugins
-%defattr(-,root,root)
 %{python2_sitelib}/koji_cli_plugins
 # we don't have config files for default plugins yet
 #%%dir %%{_sysconfdir}/koji/plugins
@@ -291,7 +288,6 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 
 %if 0%{with python3}
 %files -n python%{python3_pkgversion}-%{name}-cli-plugins
-%defattr(-,root,root)
 %{python3_sitelib}/koji_cli_plugins
 # we don't have config files for default plugins yet
 #%%dir %%{_sysconfdir}/koji/plugins
@@ -299,7 +295,6 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %endif
 
 %files hub
-%defattr(-,root,root)
 %{_datadir}/koji-hub
 %dir %{_libexecdir}/koji-hub
 %{_libexecdir}/koji-hub/rpmdiff
@@ -309,14 +304,12 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %dir /etc/koji-hub/hub.conf.d
 
 %files hub-plugins
-%defattr(-,root,root)
 %dir %{_prefix}/lib/koji-hub-plugins
 %{_prefix}/lib/koji-hub-plugins/*.py*
 %dir /etc/koji-hub/plugins
 /etc/koji-hub/plugins/*.conf
 
 %files utils
-%defattr(-,root,root)
 %{_sbindir}/kojira
 %if %{use_systemd}
 %{_unitdir}/kojira.service
@@ -334,7 +327,6 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %config(noreplace) /etc/koji-shadow/koji-shadow.conf
 
 %files web
-%defattr(-,root,root)
 %{_datadir}/koji-web
 %dir /etc/kojiweb
 %config(noreplace) /etc/kojiweb/web.conf
@@ -342,7 +334,6 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %dir /etc/kojiweb/web.conf.d
 
 %files builder
-%defattr(-,root,root)
 %{_sbindir}/kojid
 %dir %{_libexecdir}/kojid
 %{_libexecdir}/kojid/mergerepos
@@ -389,7 +380,6 @@ fi
 %endif
 
 %files vm
-%defattr(-,root,root)
 %{_sbindir}/kojivmd
 #dir %%{_datadir}/kojivmd
 %{_datadir}/kojivmd/kojikamid
