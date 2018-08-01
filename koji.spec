@@ -25,19 +25,14 @@
 %endif
 
 Name: koji
-Version: 1.15.1
-Release: 3%{?dist}
+Version: 1.16.0
+Release: 1%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
 Group: Applications/System
 URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
-
-# Backported patches
-Patch0:   https://pagure.io/koji/pull-request/735.patch
-Patch1:   https://pagure.io/koji/pull-request/794.patch
-Patch2:   https://pagure.io/koji/pull-request/841.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -243,9 +238,6 @@ koji-web is a web UI to the Koji system.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -297,7 +289,6 @@ sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/b
 %files hub
 %{_datadir}/koji-hub
 %dir %{_libexecdir}/koji-hub
-%{_libexecdir}/koji-hub/rpmdiff
 %config(noreplace) /etc/httpd/conf.d/kojihub.conf
 %dir /etc/koji-hub
 %config(noreplace) /etc/koji-hub/hub.conf
@@ -438,6 +429,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 31 2018 Kevin Fenzi <kevin@scrye.com> - 1.16.0-1
+- Update to 1.16.0
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.15.1-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
