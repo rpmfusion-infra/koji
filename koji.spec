@@ -25,7 +25,7 @@
 %endif
 
 Name: koji
-Version: 1.16.0
+Version: 1.16.1
 Release: 1%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
@@ -429,6 +429,9 @@ fi
 %endif
 
 %changelog
+* Thu Sep 13 2018 Kevin Fenzi <kevin@scrye.com> - 1.16.1-1
+- Update to 1.16.1
+
 * Tue Jul 31 2018 Kevin Fenzi <kevin@scrye.com> - 1.16.0-1
 - Update to 1.16.0
 
