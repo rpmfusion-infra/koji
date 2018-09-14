@@ -26,7 +26,7 @@
 
 Name: koji
 Version: 1.16.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -253,7 +253,7 @@ make DESTDIR=$RPM_BUILD_ROOT PYTHON=python3 %{?install_opt} install
 cd ../plugins
 make DESTDIR=$RPM_BUILD_ROOT PYTHON=python3 %{?install_opt} install
 # alter python interpreter in koji CLI
-sed -i 's/\#\!\/usr\/bin\/python/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/bin/koji
+sed -i 's/\#\!\/usr\/bin\/python2/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/bin/koji
 %endif
 
 %files
@@ -429,6 +429,9 @@ fi
 %endif
 
 %changelog
+* Fri Sep 14 2018 Kevin Fenzi <kevin@scrye.com> - 1.16.1-2
+- Fix bad sed that caused python32 dep.
+
 * Thu Sep 13 2018 Kevin Fenzi <kevin@scrye.com> - 1.16.1-1
 - Update to 1.16.1
 
