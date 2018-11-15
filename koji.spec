@@ -1,3 +1,7 @@
+# This package depends on automagic byte compilation
+# https://fedoraproject.org/wiki/Changes/No_more_automagic_Python_bytecompilation_phase_2
+%global _python_bytecompile_extra 1
+
 # Enable Python 3 builds for Fedora + EPEL >5
 # NOTE: do **NOT** change 'epel' to 'rhel' here, as this spec is also
 %if 0%{?fedora} || 0%{?rhel} > 7
