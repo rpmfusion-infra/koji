@@ -30,13 +30,19 @@
 
 Name: koji
 Version: 1.16.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
 Group: Applications/System
 URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
+
+# Fix is_conn_error bug which commonly caused operations that wait a
+# long time to fail out prematurely on Python 3
+# https://pagure.io/koji/issue/1192
+# https://pagure.io/koji/pull-request/1203
+Patch0: 0001-Fix-is_conn_error-for-Python-3.3-change-to-socket.er.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -242,6 +248,7 @@ koji-web is a web UI to the Koji system.
 
 %prep
 %setup -q
+%patch0 -p1 -b .connerror
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -433,6 +440,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 09 2019 Adam Williamson <awilliam@redhat.com> - 1.16.1-3
+- Backport fix for Python 3 connection failure bug (#1192, PR #1203)
+
 * Fri Sep 14 2018 Kevin Fenzi <kevin@scrye.com> - 1.16.1-2
 - Fix bad sed that caused python32 dep.
 
