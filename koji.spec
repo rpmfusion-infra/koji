@@ -34,7 +34,6 @@ Release: 3%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
-Group: Applications/System
 URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
@@ -119,7 +118,6 @@ contains shared libraries and the command-line interface.
 
 %package -n python2-%{name}-cli-plugins
 Summary: Koji client plugins
-Group: Applications/Internet
 License: LGPLv2
 Requires: %{name} = %{version}-%{release}
 
@@ -129,7 +127,6 @@ Plugins to the koji command-line interface
 %if 0%{with python3}
 %package -n python3-%{name}-cli-plugins
 Summary: Koji client plugins
-Group: Applications/Internet
 License: LGPLv2
 Requires: %{name} = %{version}-%{release}
 
@@ -139,7 +136,6 @@ Plugins to the koji command-line interface
 
 %package hub
 Summary: Koji XMLRPC interface
-Group: Applications/Internet
 License: LGPLv2 and GPLv2
 # rpmdiff lib (from rpmlint) is GPLv2 (only)
 Requires: httpd
@@ -152,7 +148,6 @@ koji-hub is the XMLRPC interface to the koji database
 
 %package hub-plugins
 Summary: Koji hub plugins
-Group: Applications/Internet
 License: LGPLv2
 Requires: %{name}-hub = %{version}-%{release}
 Requires: python-qpid >= 0.7
@@ -164,7 +159,6 @@ Plugins to the koji XMLRPC interface
 
 %package builder
 Summary: Koji RPM builder daemon
-Group: Applications/System
 License: LGPLv2 and GPLv2+
 #mergerepos (from createrepo) is GPLv2+
 Requires: python2-%{name} = %{version}-%{release}
@@ -194,7 +188,6 @@ tasks that come through the Koji system.
 
 %package vm
 Summary: Koji virtual machine management daemon
-Group: Applications/System
 License: LGPLv2
 Requires: python2-%{name} = %{version}-%{release}
 %if %{use_systemd}
@@ -218,7 +211,6 @@ virtual machine. This package is not required for most installations.
 
 %package utils
 Summary: Koji Utilities
-Group: Applications/Internet
 License: LGPLv2
 Requires: python-psycopg2
 Requires: python2-%{name} = %{version}-%{release}
@@ -233,7 +225,6 @@ Utilities for the Koji system
 
 %package web
 Summary: Koji Web UI
-Group: Applications/Internet
 License: LGPLv2
 Requires: httpd
 Requires: mod_wsgi
