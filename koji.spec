@@ -29,8 +29,8 @@
 %endif
 
 Name: koji
-Version: 1.16.1
-Release: 4%{?dist}
+Version: 1.16.2
+Release: 1%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -431,6 +431,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 21 2019 Patrick Uiterwijk <puiterwijk@redhat.com> - 1.16.2-1
+- Rebase to 1.16.2 for CVE-2018-1002161
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.16.1-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
