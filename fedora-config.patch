@@ -1,6 +1,17 @@
-diff -rup koji-1.15.0.orig/cli/koji.conf koji-1.15.0/cli/koji.conf
---- koji-1.15.0.orig/cli/koji.conf	2018-01-27 10:44:39.111029362 +0100
-+++ koji-1.15.0/cli/koji.conf	2018-01-27 10:46:33.713817186 +0100
+From 47d9f103194e65611a472db42eff03eabe423739 Mon Sep 17 00:00:00 2001
+From: Patrick Uiterwijk <patrick@puiterwijk.org>
+Date: Thu, 7 Mar 2019 12:22:12 +0100
+Subject: [PATCH] Apply Fedora instance configuration
+
+Signed-off-by: Patrick Uiterwijk <patrick@puiterwijk.org>
+---
+ cli/koji.conf | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
+
+diff --git a/cli/koji.conf b/cli/koji.conf
+index addd4e3..4fcb2ae 100644
+--- a/cli/koji.conf
++++ b/cli/koji.conf
 @@ -3,18 +3,23 @@
  ;configuration for koji cli tool
  
@@ -28,7 +39,7 @@ diff -rup koji-1.15.0.orig/cli/koji.conf koji-1.15.0/cli/koji.conf
  
  ;the service name of the principal being used by the hub
  ;krbservice = host
-@@ -29,13 +34,6 @@
+@@ -29,16 +34,9 @@
  ;krb_canon_host = no
  
  
@@ -45,3 +56,9 @@ diff -rup koji-1.15.0.orig/cli/koji.conf koji-1.15.0/cli/koji.conf
 +;enabled plugins for CLI, runroot is enabled by deafult for fedora
 +;save_failed_tree is available
 +plugins = runroot
+ 
+ ;timeout of XMLRPC requests by seconds, default: 60 * 60 * 12 = 43200
+ ;timeout = 43200
+-- 
+2.20.1
+

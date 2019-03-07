@@ -29,19 +29,13 @@
 %endif
 
 Name: koji
-Version: 1.16.2
+Version: 1.17.0
 Release: 1%{?dist}
 # koji.ssl libs (from plague) are GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
 URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
-
-# Fix is_conn_error bug which commonly caused operations that wait a
-# long time to fail out prematurely on Python 3
-# https://pagure.io/koji/issue/1192
-# https://pagure.io/koji/pull-request/1203
-Patch0: 0001-Fix-is_conn_error-for-Python-3.3-change-to-socket.er.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -239,7 +233,6 @@ koji-web is a web UI to the Koji system.
 
 %prep
 %setup -q
-%patch0 -p1 -b .connerror
 %patch100 -p1 -b .fedoraconfig
 
 %build
@@ -256,6 +249,10 @@ cd ../plugins
 make DESTDIR=$RPM_BUILD_ROOT PYTHON=python3 %{?install_opt} install
 # alter python interpreter in koji CLI
 sed -i 's/\#\!\/usr\/bin\/python2/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/bin/koji
+%endif
+%if 0%{?fedora} <= 29
+# This changed in 1.17.0, make sure that existing installs do not break
+ln -s /usr/share/koji-hub %RPM_BUILD_ROOT/usr/libexec/koji-hub
 %endif
 
 %files
@@ -290,7 +287,11 @@ sed -i 's/\#\!\/usr\/bin\/python2/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/
 
 %files hub
 %{_datadir}/koji-hub
-%dir %{_libexecdir}/koji-hub
+%if 0%{?fedora} <= 29
+# Compatibility symlink
+%{_libexecdir}/koji-hub
+%endif
+%dir %{_datarootdir}/koji-hub
 %config(noreplace) /etc/httpd/conf.d/kojihub.conf
 %dir /etc/koji-hub
 %config(noreplace) /etc/koji-hub/hub.conf
@@ -299,6 +300,7 @@ sed -i 's/\#\!\/usr\/bin\/python2/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/
 %files hub-plugins
 %dir %{_prefix}/lib/koji-hub-plugins
 %{_prefix}/lib/koji-hub-plugins/*.py*
+%{_prefix}/lib/koji-hub-plugins/__pycache__/
 %dir /etc/koji-hub/plugins
 /etc/koji-hub/plugins/*.conf
 
@@ -333,6 +335,7 @@ sed -i 's/\#\!\/usr\/bin\/python2/\#\!\/usr\/bin\/python3/' $RPM_BUILD_ROOT/usr/
 %defattr(-,root,root)
 %dir %{_prefix}/lib/koji-builder-plugins
 %{_prefix}/lib/koji-builder-plugins/*.py*
+%{_prefix}/lib/koji-builder-plugins/__pycache__/
 %if %{use_systemd}
 %{_unitdir}/kojid.service
 %else
@@ -431,6 +434,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 07 2019 Patrick Uiterwijk <puiterwijk@redhat.com> - 1.17.0-1
+- Rebase to 1.17.0
+
 * Thu Feb 21 2019 Patrick Uiterwijk <puiterwijk@redhat.com> - 1.16.2-1
 - Rebase to 1.16.2 for CVE-2018-1002161
 
