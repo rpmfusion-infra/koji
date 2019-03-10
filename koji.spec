@@ -78,7 +78,7 @@
 
 Name: koji
 Version: 1.17.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -452,10 +452,6 @@ done
 sed -i 's|#!/usr/bin/python2|#!/usr/bin/python3|' $RPM_BUILD_ROOT/usr/bin/koji
 %endif
 %endif
-%if 0%{?fedora} <= 29
-# This changed in 1.17.0, make sure that existing installs do not break
-ln -s /usr/share/koji-hub %RPM_BUILD_ROOT/usr/libexec/koji-hub
-%endif
 
 %if 0%{?fedora} >= 28
 # handle extra byte compilation
@@ -684,6 +680,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 10 2019 Neal Gompa <ngompa13@gmail.com> - 1.17.0-3
+- Remove remnants of unused /usr/libexec/koji-hub
+
 * Thu Mar 07 2019 Neal Gompa <ngompa13@gmail.com> - 1.17.0-2
 - Enable Python 3 for Fedora 30+ and EL8+
 - Sync packaging changes from upstream
