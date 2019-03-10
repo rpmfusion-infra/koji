@@ -78,12 +78,17 @@
 
 Name: koji
 Version: 1.17.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
 URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
+
+# Patches proposed upstream
+## Use createrepo_c by default now (we already do this in Fedora infra anyway)
+## From: https://pagure.io/koji/pull-request/1278
+Patch10: koji-PR1278-use-createrepo_c-by-default.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -288,7 +293,7 @@ Requires(preun): /sbin/service
 Requires: /usr/bin/cvs
 Requires: /usr/bin/svn
 Requires: /usr/bin/git
-Requires: createrepo >= 0.9.2
+Requires: createrepo_c >= 0.10.0
 %if 0%{py3_support} > 1
 Requires: python%{python3_pkgversion}-%{name} = %{version}-%{release}
 Requires: python%{python3_pkgversion}-librepo
@@ -403,6 +408,8 @@ koji-web is a web UI to the Koji system.
 
 %prep
 %setup -q
+
+%patch10 -p1 -b .createrepo_c
 
 %patch100 -p1 -b .fedoraconfig
 
@@ -680,6 +687,9 @@ fi
 %endif
 
 %changelog
+* Sun Mar 10 2019 Neal Gompa <ngompa13@gmail.com> - 1.17.0-4
+- Add patch proposed upstream to use createrepo_c by default to drop yum dependency
+
 * Sun Mar 10 2019 Neal Gompa <ngompa13@gmail.com> - 1.17.0-3
 - Remove remnants of unused /usr/libexec/koji-hub
 

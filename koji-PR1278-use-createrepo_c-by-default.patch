@@ -1,0 +1,37 @@
+From 781a09a9750a18b77208e58eaa960b1b0d3f7dac Mon Sep 17 00:00:00 2001
+From: Tomas Kopecek <tkopecek@redhat.com>
+Date: Feb 25 2019 13:50:30 +0000
+Subject: createrepo_c is used by default now
+
+
+Fixes: https://pagure.io/koji/issue/716
+
+---
+
+diff --git a/builder/kojid b/builder/kojid
+index e7c87f9..5e97615 100755
+--- a/builder/kojid
++++ b/builder/kojid
+@@ -5975,7 +5975,7 @@ def get_options():
+                 'timeout': None,
+                 'no_ssl_verify': False,
+                 'use_fast_upload': True,
+-                'use_createrepo_c': False,
++                'use_createrepo_c': True,
+                 'createrepo_skip_stat': True,
+                 'createrepo_update': True,
+                 'pkgurl': None,
+diff --git a/builder/kojid.conf b/builder/kojid.conf
+index 7bc235d..b9f0851 100644
+--- a/builder/kojid.conf
++++ b/builder/kojid.conf
+@@ -50,7 +50,7 @@ server=http://hub.example.com/kojihub
+ topurl=http://hub.example.com/kojifiles
+ 
+ ; use createrepo_c rather than createrepo
+-; use_createrepo_c=False
++; use_createrepo_c=True
+ 
+ ; A space-separated list of tuples from which kojid is allowed to checkout.
+ ; The format of those tuples is:
+
