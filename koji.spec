@@ -44,9 +44,6 @@
 %endif
 %endif
 
-# Until imgfac is ported, keep kojid at py2
-%bcond_without py2_kojid
-
 # Lastly enforce the bcond parameters
 %if %{without python2}
 %define py2_support 0
@@ -81,7 +78,7 @@
 
 Name: koji
 Version: 1.17.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -92,6 +89,15 @@ Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 ## Use createrepo_c by default now (we already do this in Fedora infra anyway)
 ## From: https://pagure.io/koji/pull-request/1278
 Patch10: koji-PR1278-use-createrepo_c-by-default.patch
+
+# Download only the repomd.xml instead of all the repodata
+Patch11: https://pagure.io/koji/pull-request/1398.patch
+
+# Allow generating seperate srpm repos in buildroot repos
+Patch12: https://pagure.io/koji/pull-request/1273.patch
+
+# Handle 'bare' merge mode for repos
+Patch13: https://pagure.io/koji/pull-request/1411.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -297,7 +303,7 @@ Requires: /usr/bin/cvs
 Requires: /usr/bin/svn
 Requires: /usr/bin/git
 Requires: createrepo_c >= 0.10.0
-%if 0%{py3_support} > 1 && (! %{with py2_kojid})
+%if 0%{py3_support} > 1
 Requires: python%{python3_pkgversion}-%{name} = %{version}-%{release}
 Requires: python%{python3_pkgversion}-librepo
 Requires: python%{python3_pkgversion}-multilib
@@ -412,9 +418,12 @@ koji-web is a web UI to the Koji system.
 %prep
 %setup -q
 
-%patch10 -p1 -b .createrepo_c
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
-%patch100 -p1 -b .fedoraconfig
+%patch100 -p1
 
 
 %build
@@ -445,7 +454,7 @@ done
 %if 0%{py3_support} > 1
 make DESTDIR=$RPM_BUILD_ROOT PYTHON=%{__python3} %{?install_opt} install
 # alter python interpreter in koji CLI
-scripts='%{_bindir}/koji %{!?with_py2_kojid:%{_sbindir}/kojid} %{_sbindir}/kojira %{_sbindir}/koji-shadow
+scripts='%{_bindir}/koji %{_sbindir}/kojid %{_sbindir}/kojira %{_sbindir}/koji-shadow
          %{_sbindir}/koji-gc %{_sbindir}/kojivmd'
 for fn in $scripts ; do
     sed -i 's|#!/usr/bin/python2|#!/usr/bin/python3|' $RPM_BUILD_ROOT$fn
@@ -690,6 +699,12 @@ fi
 %endif
 
 %changelog
+* Tue May 28 2019 Kevin Fenzi <kevin@scrye.com> - 1.17.0-6
+- Switch kojid back to python3 as imagefactory and oz have moved.
+- Backport patch to download only repomd.xml instead of all repodata.
+- Backport patch to allow 'bare' repo merging for modularity.
+- Backport patch to allow for seperate srpm repos in buildroot repos.
+
 * Mon Mar 11 2019 Neal Gompa <ngompa13@gmail.com> - 1.17.0-5
 - Switch kojid back to Python 2 so that imgfac doesn't get disabled
 
