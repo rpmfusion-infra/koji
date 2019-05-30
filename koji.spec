@@ -33,7 +33,7 @@
 %define py3_support 2
 %else
 # Keep some minimal python2 in f30 for now
-%if 0%{?fedora} = 30
+%if 0%{?fedora} == 30
 %define py2_support 1
 %define py3_support 2
 %else
