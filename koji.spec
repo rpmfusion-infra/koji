@@ -27,12 +27,13 @@
 %endif
 %endif
 
-%if 0%{?fedora} >= 33
-# no py2 after F33
+%if 0%{?fedora} > 30
+# no py2 after F31
 %define py2_support 0
 %define py3_support 2
 %else
-%if 0%{?fedora} >= 30
+# Keep some minimal python2 in f30 for now
+%if 0%{?fedora} = 30
 %define py2_support 1
 %define py3_support 2
 %else
@@ -78,7 +79,7 @@
 
 Name: koji
 Version: 1.17.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -98,6 +99,14 @@ Patch12: https://pagure.io/koji/pull-request/1273.patch
 
 # Handle 'bare' merge mode for repos
 Patch13: https://pagure.io/koji/pull-request/1411.patch
+
+# Expose dynamic_buildrequires mock setting
+# Upstream: https://pagure.io/koji/pull-request/1466.patch
+# Rebased for 1.17.0 in https://src.fedoraproject.org/rpms/koji/pull-request/6
+Patch14: https://src.fedoraproject.org/rpms/koji/c/9828bc3dd8ed0679159aceb902409600b21f803c.patch
+
+# Patch to fix kerberos auth in kojid with python3
+Patch15: https://pagure.io/koji/pull-request/1468.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -284,8 +293,12 @@ Plugins for the koji build daemon
 
 %package builder
 Summary: Koji RPM builder daemon
+%if 0%{py3_support} > 1
+License: LGPLv2
+%else
 License: LGPLv2 and GPLv2+
 #mergerepos (from createrepo) is GPLv2+
+%endif
 Requires: mock >= 0.9.14
 Requires(pre): /usr/sbin/useradd
 Requires: squashfs-tools
@@ -416,14 +429,7 @@ koji-web is a web UI to the Koji system.
 %endif
 
 %prep
-%setup -q
-
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
-%patch100 -p1
+%autosetup -p1
 
 
 %build
@@ -490,6 +496,11 @@ for fn in $extra_dirs ; do
     %py_byte_compile %{__python3} %{buildroot}$fn
 done
 %endif
+%endif
+
+%if 0%{py2_support} < 1
+# With no python2 support, remove/do not ship internal mergerepos
+rm -f %{buildroot}/%{_libexecdir}/kojid/mergerepos
 %endif
 
 %files
@@ -602,8 +613,10 @@ done
 
 %files builder
 %{_sbindir}/kojid
+%if 0%{py2_support} > 1
 %dir %{_libexecdir}/kojid
 %{_libexecdir}/kojid/mergerepos
+%endif
 %if %{use_systemd}
 %{_unitdir}/kojid.service
 %else
@@ -699,6 +712,13 @@ fi
 %endif
 
 %changelog
+* Thu May 30 2019 Kevin Fenzi <kevin@scrye.com> - 1.17.0-7
+- Add patch to fix koji kerberos auth with python3.
+- Drop internal mergerepos so we can go all python3. Fixes bug #1715257
+
+* Wed May 29 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.17.0-7
+- Expose dynamic_buildrequires mock setting
+
 * Tue May 28 2019 Kevin Fenzi <kevin@scrye.com> - 1.17.0-6
 - Switch kojid back to python3 as imagefactory and oz have moved.
 - Backport patch to download only repomd.xml instead of all repodata.

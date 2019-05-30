@@ -1,0 +1,96 @@
+From 9828bc3dd8ed0679159aceb902409600b21f803c Mon Sep 17 00:00:00 2001
+From: Igor Gnatenko <ignatenkobrain@fedoraproject.org>
+Date: May 30 2019 18:45:46 +0000
+Subject: Expose 'dynamic_buildrequires' mock setting
+
+
+We need it in order to enable this feature in rawhide and any module
+builds which depend on rpm:4.15 (by request in modulemd).
+
+Signed-off-by: Igor Gnatenko <ignatenkobrain@fedoraproject.org>
+
+---
+
+diff --git a/0001-Expose-dynamic_buildrequires-mock-setting.patch b/0001-Expose-dynamic_buildrequires-mock-setting.patch
+new file mode 100644
+index 0000000..914b5a4
+--- /dev/null
++++ b/0001-Expose-dynamic_buildrequires-mock-setting.patch
+@@ -0,0 +1,77 @@
++From cdecc416ec4cc5a5f29d0ff16318f68b562fcfd0 Mon Sep 17 00:00:00 2001
++From: Igor Gnatenko <ignatenkobrain@fedoraproject.org>
++Date: Wed, 29 May 2019 08:13:01 +0200
++Subject: [PATCH] Expose 'dynamic_buildrequires' mock setting
++
++Signed-off-by: Igor Gnatenko <ignatenkobrain@fedoraproject.org>
++---
++ builder/kojid                               | 2 ++
++ docs/source/using_the_koji_build_system.rst | 2 ++
++ koji/__init__.py                            | 2 ++
++ tests/test_cli/test_add_tag.py              | 4 +++-
++ 4 files changed, 9 insertions(+), 1 deletion(-)
++
++diff --git a/builder/kojid b/builder/kojid
++index d6714258..5fc64638 100755
++--- a/builder/kojid
+++++ b/builder/kojid
++@@ -272,6 +272,8 @@ class BuildRoot(object):
++         opts['target_arch'] = self.target_arch
++         if 'mock.package_manager' in self.config['extra']:
++             opts['package_manager'] = self.config['extra']['mock.package_manager']
+++        if 'mock.dynamic_buildrequires' in self.config['extra']:
+++            opts['dynamic_buildrequires'] = self.config['extra']['mock.dynamic_buildrequires']
++         if self.internal_dev_setup is not None:
++             opts['internal_dev_setup'] = bool(self.internal_dev_setup)
++         output = koji.genMockConfig(self.name, self.br_arch, managed=True, **opts)
++diff --git a/docs/source/using_the_koji_build_system.rst b/docs/source/using_the_koji_build_system.rst
++index c3d5981b..d4664527 100644
++--- a/docs/source/using_the_koji_build_system.rst
+++++ b/docs/source/using_the_koji_build_system.rst
++@@ -456,6 +456,8 @@ environment follows:
++ * `mock.new_chroot` - 0/1 value. If it is set, `--new-chroot` or
++   `--old-chroot` option is appended to any mock call. If it is not set,
++   mock's default behavior is used.
+++* `mock.dynamic_buildrequires` - 0/1 value. If this is set, it will override
+++  mock's default setting of `dynamic_buildrequires`.
++ 
++ Using Koji to control tasks
++ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
++diff --git a/koji/__init__.py b/koji/__init__.py
++index 64ab90d6..e105f7ee 100644
++--- a/koji/__init__.py
+++++ b/koji/__init__.py
++@@ -1458,6 +1458,8 @@ def genMockConfig(name, arch, managed=False, repoid=None, tag_name=None, **opts)
++     }
++     if opts.get('package_manager'):
++         config_opts['package_manager'] = opts['package_manager']
+++    if 'dynamic_buildrequires' in opts:
+++        config_opts['dynamic_buildrequires'] = opts['dynamic_buildrequires']
++ 
++     # bind_opts are used to mount parts (or all of) /dev if needed.
++     # See kojid::LiveCDTask for a look at this option in action.
++diff --git a/tests/test_cli/test_add_tag.py b/tests/test_cli/test_add_tag.py
++index 422b9245..47112c51 100644
++--- a/tests/test_cli/test_add_tag.py
+++++ b/tests/test_cli/test_add_tag.py
++@@ -56,7 +56,8 @@ class TestAddTag(utils.CliTestCase):
++                      '--maven-support', '--include-all']
++         # extra fields,
++         arguments += ['--extra', 'mock.package_manager=dnf',
++-                      '--extra', 'mock.new_chroot=0']
+++                      '--extra', 'mock.new_chroot=0',
+++                      '--extra', 'mock.dynamic_buildrequires=1']
++ 
++         opts = {
++             'parent': 'parent',
++@@ -67,6 +68,7 @@ class TestAddTag(utils.CliTestCase):
++             {
++                 'mock.package_manager': 'dnf',
++                 'mock.new_chroot': 0,
+++                'mock.dynamic_buildrequires': 1,
++             }
++         }
++ 
++-- 
++2.22.0.rc1
++
