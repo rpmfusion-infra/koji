@@ -79,7 +79,7 @@
 
 Name: koji
 Version: 1.17.0
-Release: 7%{?dist}
+Release: 8%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -712,6 +712,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.17.0-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Thu May 30 2019 Kevin Fenzi <kevin@scrye.com> - 1.17.0-7
 - Add patch to fix koji kerberos auth with python3.
 - Drop internal mergerepos so we can go all python3. Fixes bug #1715257
