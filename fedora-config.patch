@@ -1,65 +1,49 @@
-From e28b662b29f688954a8ebe772e21cb7025ba47b6 Mon Sep 17 00:00:00 2001
-From: Patrick Uiterwijk <patrick@puiterwijk.org>
-Date: Thu, 7 Mar 2019 12:22:12 +0100
-Subject: [PATCH] Apply Fedora instance configuration
-
-Signed-off-by: Patrick Uiterwijk <patrick@puiterwijk.org>
----
- cli/koji.conf | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
-
-diff --git a/cli/koji.conf b/cli/koji.conf
-index addd4e3..3588c19 100644
---- a/cli/koji.conf
-+++ b/cli/koji.conf
-@@ -3,18 +3,23 @@
- ;configuration for koji cli tool
+diff -Nur koji-1.18.0.orig/cli/koji.conf koji-1.18.0/cli/koji.conf
+--- koji-1.18.0.orig/cli/koji.conf	2019-08-09 11:07:07.000000000 -0700
++++ koji-1.18.0/cli/koji.conf	2019-08-16 08:14:51.834690613 -0700
+@@ -4,17 +4,22 @@
  
  ;url of XMLRPC server
--;server = http://hub.example.com/kojihub
+ ;server = http://hub.example.com/kojihub
 +server = https://koji.fedoraproject.org/kojihub
  
  ;url of web interface
--;weburl = http://www.example.com/koji
+ ;weburl = http://www.example.com/koji
 +weburl = https://koji.fedoraproject.org/koji
  
  ;url of package download site
--;pkgurl = http://www.example.com/packages
-+topurl = https://kojipkgs.fedoraproject.org/
+ ;pkgurl = http://www.example.com/packages
++pkgurl = https://kojipkgs.fedoraproject.org/
  
  ;path to the koji top directory
  ;topdir = /mnt/koji
  
-+; use the fast upload feature of koji by default
-+use_fast_upload = yes
-+
  ;configuration for Kerberos authentication
 +authtype = kerberos
 +krb_rdns = false
  
  ;the service name of the principal being used by the hub
  ;krbservice = host
-@@ -28,17 +33,9 @@
+@@ -28,7 +33,6 @@
  ;enable to lookup dns canonical hostname for krb auth
  ;krb_canon_host = no
  
 -
--;configuration for SSL authentication
--
--;client certificate
--;cert = ~/.koji/client.crt
--
--;certificate of the CA that issued the HTTP server certificate
--;serverca = ~/.koji/serverca.crt
--
--;enabled plugins for CLI, runroot and save_failed_tree are available
--;plugins =
-+;enabled plugins for CLI, runroot is enabled by default for fedora
-+;save_failed_tree is available
+ ;configuration for SSL authentication
+ 
+ ;client certificate
+@@ -45,9 +49,14 @@
+ ;[not_implemented_yet]
+ ;enabled plugins for CLI, runroot and save_failed_tree are available
+ ;plugins =
++; runroot plugin is enabled by default in fedora
 +plugins = runroot
  
  ;timeout of XMLRPC requests by seconds, default: 60 * 60 * 12 = 43200
  ;timeout = 43200
--- 
-2.20.1
-
+ 
+ ;timeout of GSSAPI/SSL authentication by seconds, default: 60
+ ;auth_timeout = 60
++
++; use the fast upload feature of koji by default
++use_fast_upload = yes

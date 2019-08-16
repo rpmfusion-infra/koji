@@ -78,35 +78,20 @@
 %endif
 
 Name: koji
-Version: 1.17.0
-Release: 8%{?dist}
+Version: 1.18.0
+Release: 1%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
 URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
-# Patches proposed upstream
-## Use createrepo_c by default now (we already do this in Fedora infra anyway)
-## From: https://pagure.io/koji/pull-request/1278
-Patch10: koji-PR1278-use-createrepo_c-by-default.patch
+# Patches already upstream
+# Already merged patch to fix kojid kerberos auth
+Patch1: https://pagure.io/koji/pull-request/1613.patch
 
-# Download only the repomd.xml instead of all the repodata
-Patch11: https://pagure.io/koji/pull-request/1398.patch
-
-# Allow generating seperate srpm repos in buildroot repos
-Patch12: https://pagure.io/koji/pull-request/1273.patch
-
-# Handle 'bare' merge mode for repos
-Patch13: https://pagure.io/koji/pull-request/1411.patch
-
-# Expose dynamic_buildrequires mock setting
-# Upstream: https://pagure.io/koji/pull-request/1466.patch
-# Rebased for 1.17.0 in https://src.fedoraproject.org/rpms/koji/pull-request/6
-Patch14: https://src.fedoraproject.org/rpms/koji/c/9828bc3dd8ed0679159aceb902409600b21f803c.patch
-
-# Patch to fix kerberos auth in kojid with python3
-Patch15: https://pagure.io/koji/pull-request/1468.patch
+# Adjust xz params to favor speed
+Patch15: https://pagure.io/koji/pull-request/1576.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -712,6 +697,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 16 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-1
+- Update to 1.18.0.
+
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.17.0-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
