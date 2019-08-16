@@ -13,7 +13,7 @@ diff -Nur koji-1.18.0.orig/cli/koji.conf koji-1.18.0/cli/koji.conf
  
  ;url of package download site
  ;pkgurl = http://www.example.com/packages
-+pkgurl = https://kojipkgs.fedoraproject.org/
++topurl = https://kojipkgs.fedoraproject.org/
  
  ;path to the koji top directory
  ;topdir = /mnt/koji

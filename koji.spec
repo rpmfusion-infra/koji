@@ -79,7 +79,7 @@
 
 Name: koji
 Version: 1.18.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -697,6 +697,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 16 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-3
+- Fix pkgsurl/topurl default mistake.
+
 * Fri Aug 16 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-2
 - Fix mergerepos conditional for f30.
 
