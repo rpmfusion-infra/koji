@@ -79,7 +79,7 @@
 
 Name: koji
 Version: 1.18.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -483,7 +483,7 @@ done
 %endif
 %endif
 
-%if 0%{py2_support} < 1
+%if 0%{py2_support} < 2
 # With no python2 support, remove/do not ship internal mergerepos
 rm -f %{buildroot}/%{_libexecdir}/kojid/mergerepos
 %endif
@@ -697,6 +697,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 16 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-2
+- Fix mergerepos conditional for f30.
+
 * Fri Aug 16 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-1
 - Update to 1.18.0.
 
