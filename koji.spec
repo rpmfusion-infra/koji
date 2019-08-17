@@ -79,7 +79,7 @@
 
 Name: koji
 Version: 1.18.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -697,6 +697,9 @@ fi
 %endif
 
 %changelog
+* Sat Aug 17 2019 Miro Hrončok <mhroncok@redhat.com> - 1.18.0-4
+- Rebuilt for Python 3.8
+
 * Fri Aug 16 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-3
 - Fix pkgsurl/topurl default mistake.
 
