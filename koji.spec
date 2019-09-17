@@ -79,7 +79,7 @@
 
 Name: koji
 Version: 1.18.0
-Release: 4%{?dist}
+Release: 5%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -154,6 +154,9 @@ Requires: python%{python3_pkgversion}-requests
 Requires: python%{python3_pkgversion}-requests-kerberos
 Requires: python%{python3_pkgversion}-dateutil
 Requires: python%{python3_pkgversion}-six
+# Since we don't have metadata here, provide the 'normal' python provides manually.
+Provides: python%{python3_version}dist(%{name}) = %{version}
+Provides: python%{python3_version_nodots}dist(%{name}) = %{version}
 
 %description -n python%{python3_pkgversion}-%{name}
 desc
@@ -697,6 +700,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 17 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-5
+- Add provides for python3 subpackage. Fixes bug #1750391
+
 * Sat Aug 17 2019 Miro Hrončok <mhroncok@redhat.com> - 1.18.0-4
 - Rebuilt for Python 3.8
 
