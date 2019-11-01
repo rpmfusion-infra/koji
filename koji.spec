@@ -78,7 +78,7 @@
 %endif
 
 Name: koji
-Version: 1.18.1
+Version: 1.19.0
 Release: 1%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
@@ -87,8 +87,6 @@ URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Patches already upstream
-# Already merged patch to fix kojid kerberos auth
-Patch1: https://pagure.io/koji/pull-request/1613.patch
 
 # Adjust xz params to favor speed
 Patch15: https://pagure.io/koji/pull-request/1576.patch
@@ -154,6 +152,9 @@ Requires: python%{python3_pkgversion}-requests
 Requires: python%{python3_pkgversion}-requests-kerberos
 Requires: python%{python3_pkgversion}-dateutil
 Requires: python%{python3_pkgversion}-six
+# Since we don't have metadata here, provide the 'normal' python provides manually.
+Provides: python%{python3_version}dist(%{name}) = %{version}
+Provides: python%{python3_pkgversion}dist(%{name}) = %{version}
 
 %description -n python%{python3_pkgversion}-%{name}
 desc
@@ -446,7 +447,7 @@ done
 make DESTDIR=$RPM_BUILD_ROOT PYTHON=%{__python3} %{?install_opt} install
 # alter python interpreter in koji CLI
 scripts='%{_bindir}/koji %{_sbindir}/kojid %{_sbindir}/kojira %{_sbindir}/koji-shadow
-         %{_sbindir}/koji-gc %{_sbindir}/kojivmd'
+         %{_sbindir}/koji-gc %{_sbindir}/kojivmd %{_sbindir}/koji-sweep-db'
 for fn in $scripts ; do
     sed -i 's|#!/usr/bin/python2|#!/usr/bin/python3|' $RPM_BUILD_ROOT$fn
 done
@@ -527,6 +528,11 @@ rm -f %{buildroot}/%{_libexecdir}/kojid/mergerepos
 %dir /etc/koji-hub
 %config(noreplace) /etc/koji-hub/hub.conf
 %dir /etc/koji-hub/hub.conf.d
+%{_sbindir}/koji-sweep-db
+%if %{use_systemd}
+%{_unitdir}/koji-sweep-db.service
+%{_unitdir}/koji-sweep-db.timer
+%endif
 
 %if 0%{py2_support} > 1
 %files -n python2-%{name}-hub
@@ -576,6 +582,7 @@ rm -f %{buildroot}/%{_libexecdir}/kojid/mergerepos
 %{_sbindir}/koji-gc
 %dir /etc/koji-gc
 %config(noreplace) /etc/koji-gc/koji-gc.conf
+%config(noreplace) /etc/koji-gc/email.tpl
 %{_sbindir}/koji-shadow
 %dir /etc/koji-shadow
 %config(noreplace) /etc/koji-shadow/koji-shadow.conf
@@ -697,8 +704,21 @@ fi
 %endif
 
 %changelog
+* Fri Nov 01 2019 Mohan Boddu <mboddu@bhujji.com> - 1.19.0-1
+- Rebase to 1.19.0
+- Removing downstream patch 1613
+
 * Wed Oct 09 2019 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.18.1-1
 - Rebase to 1.18.1 for CVE-2019-17109
+
+* Wed Sep 18 2019 Jiri Popelka <jpopelka@redhat.com> - 1.18.0-6
+- Fix macro added in previous change.
+
+* Tue Sep 17 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-5
+- Add provides for python3 subpackage. Fixes bug #1750391
+
+* Sat Aug 17 2019 Miro Hrončok <mhroncok@redhat.com> - 1.18.0-4
+- Rebuilt for Python 3.8
 
 * Fri Aug 16 2019 Kevin Fenzi <kevin@scrye.com> - 1.18.0-3
 - Fix pkgsurl/topurl default mistake.

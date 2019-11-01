@@ -1,6 +1,6 @@
-diff -Nur koji-1.18.0.orig/cli/koji.conf koji-1.18.0/cli/koji.conf
---- koji-1.18.0.orig/cli/koji.conf	2019-08-09 11:07:07.000000000 -0700
-+++ koji-1.18.0/cli/koji.conf	2019-08-16 08:14:51.834690613 -0700
+diff -Nur koji-1.19.0.orig/cli/koji.conf koji-1.19.0/cli/koji.conf
+--- koji-1.19.0.orig/cli/koji.conf	2019-10-30 11:50:10.000000000 -0700
++++ koji-1.19.0/cli/koji.conf	2019-10-31 18:28:37.518983298 -0700
 @@ -4,17 +4,22 @@
  
  ;url of XMLRPC server
@@ -13,10 +13,10 @@ diff -Nur koji-1.18.0.orig/cli/koji.conf koji-1.18.0/cli/koji.conf
  
  ;url of package download site
  ;pkgurl = http://www.example.com/packages
-+topurl = https://kojipkgs.fedoraproject.org/
  
  ;path to the koji top directory
  ;topdir = /mnt/koji
++topurl = https://kojipkgs.fedoraproject.org/
  
  ;configuration for Kerberos authentication
 +authtype = kerberos
@@ -24,15 +24,7 @@ diff -Nur koji-1.18.0.orig/cli/koji.conf koji-1.18.0/cli/koji.conf
  
  ;the service name of the principal being used by the hub
  ;krbservice = host
-@@ -28,7 +33,6 @@
- ;enable to lookup dns canonical hostname for krb auth
- ;krb_canon_host = no
- 
--
- ;configuration for SSL authentication
- 
- ;client certificate
-@@ -45,9 +49,14 @@
+@@ -48,9 +53,14 @@
  ;[not_implemented_yet]
  ;enabled plugins for CLI, runroot and save_failed_tree are available
  ;plugins =
