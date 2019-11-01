@@ -87,8 +87,6 @@ URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Patches already upstream
-# Already merged patch to fix kojid kerberos auth
-Patch1: https://pagure.io/koji/pull-request/1613.patch
 
 # Adjust xz params to favor speed
 Patch15: https://pagure.io/koji/pull-request/1576.patch
@@ -702,6 +700,7 @@ fi
 %changelog
 * Fri Nov 01 2019 Mohan Boddu <mboddu@bhujji.com> - 1.19.0-1
 - Rebase to 1.19.0
+- Removing downstream patch 1613
 
 * Wed Oct 09 2019 Patrick Uiterwijk <patrick@puiterwijk.org> - 1.18.1-1
 - Rebase to 1.18.1 for CVE-2019-17109
