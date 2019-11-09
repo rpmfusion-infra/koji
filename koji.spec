@@ -78,7 +78,7 @@
 %endif
 
 Name: koji
-Version: 1.19.0
+Version: 1.19.1
 Release: 1%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
@@ -704,6 +704,9 @@ fi
 %endif
 
 %changelog
+* Fri Nov 08 2019 Kevin Fenzi <kevin@scrye.com> - 1.19.1-1
+- Update to 1.19.1
+
 * Fri Nov 01 2019 Mohan Boddu <mboddu@bhujji.com> - 1.19.0-1
 - Rebase to 1.19.0
 - Removing downstream patch 1613
