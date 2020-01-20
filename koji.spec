@@ -78,8 +78,8 @@
 %endif
 
 Name: koji
-Version: 1.19.1
-Release: 2%{?dist}
+Version: 1.20.0
+Release: 1%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -706,6 +706,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 20 2020 Kevin Fenzi <kevin@scrye.com> - 1.20.0-1
+- Update to 1.20.0.
+
 * Wed Nov 27 2019 Kevin Fenzi <kevin@scrye.com> - 1.19.1-2
 - Add Requires to koji builder on python3-pycdio/pycdio. Fixes bug #1775536
 
