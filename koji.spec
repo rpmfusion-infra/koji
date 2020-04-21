@@ -78,7 +78,7 @@
 %endif
 
 Name: koji
-Version: 1.20.1
+Version: 1.21.0
 Release: 1%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
@@ -87,9 +87,6 @@ URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Patches already upstream
-
-# Adjust xz params to favor speed
-Patch15: https://pagure.io/koji/pull-request/1576.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -587,6 +584,7 @@ rm -f %{buildroot}/%{_libexecdir}/kojid/mergerepos
 %config(noreplace) /etc/koji-gc/email.tpl
 %{_sbindir}/koji-shadow
 %dir /etc/koji-shadow
+%{_sbindir}/koji-sidetag-cleanup
 %config(noreplace) /etc/koji-shadow/koji-shadow.conf
 
 %files web
@@ -706,6 +704,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 21 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.0-1
+- Update to 1.21.1. Fixes bug #1826406
+
 * Fri Mar 06 2020 Kevin Fenzi <kevin@scrye.com> - 1.20.1-1
 - Update to 1.20.1
 
