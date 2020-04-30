@@ -433,6 +433,8 @@ exit 1
 # python2 build
 %if 0%{py2_support} > 1
 make DESTDIR=$RPM_BUILD_ROOT PYTHON=%{__python2} %{?install_opt} install
+# koji-sidetag-cleanup has a python3 shbang, fix for python2
+sed -i 's|#!/usr/bin/python3|#!/usr/bin/python2|' $RPM_BUILD_ROOT/usr/sbin/koji-sidetag-cleanup
 %else
 %if 0%{py2_support}
 for d in koji cli plugins ; do
