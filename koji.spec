@@ -79,7 +79,7 @@
 
 Name: koji
 Version: 1.21.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -87,6 +87,9 @@ URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Patches already upstream
+# Patch to allow admin to force tag packages again
+# https://pagure.io/koji/issue/2202
+Patch1: https://pagure.io/koji/pull-request/2203.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -704,6 +707,10 @@ fi
 %endif
 
 %changelog
+* Thu Apr 30 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.0-2
+- Add patch to fix issue with admins not being able to force tagging. 
+- Fixes https://pagure.io/koji/issue/2202 upstream.
+
 * Tue Apr 21 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.0-1
 - Update to 1.21.1. Fixes bug #1826406
 
