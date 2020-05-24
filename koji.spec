@@ -79,7 +79,7 @@
 
 Name: koji
 Version: 1.21.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -709,6 +709,9 @@ fi
 %endif
 
 %changelog
+* Sun May 24 2020 Miro Hrončok <mhroncok@redhat.com> - 1.21.0-3
+- Rebuilt for Python 3.9
+
 * Thu Apr 30 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.0-2
 - Add patch to fix issue with admins not being able to force tagging. 
 - Fixes https://pagure.io/koji/issue/2202 upstream.
