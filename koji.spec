@@ -78,8 +78,8 @@
 %endif
 
 Name: koji
-Version: 1.21.0
-Release: 2%{?dist}
+Version: 1.21.1
+Release: 1%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -87,9 +87,6 @@ URL: https://pagure.io/koji/
 Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Patches already upstream
-# Patch to allow admin to force tag packages again
-# https://pagure.io/koji/issue/2202
-Patch1: https://pagure.io/koji/pull-request/2203.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -433,6 +430,8 @@ exit 1
 # python2 build
 %if 0%{py2_support} > 1
 make DESTDIR=$RPM_BUILD_ROOT PYTHON=%{__python2} %{?install_opt} install
+# koji-sidetag-cleanup has a python3 shbang, fix for python2
+sed -i 's|#!/usr/bin/python3|#!/usr/bin/python2|' $RPM_BUILD_ROOT/usr/sbin/koji-sidetag-cleanup
 %else
 %if 0%{py2_support}
 for d in koji cli plugins ; do
@@ -707,15 +706,21 @@ fi
 %endif
 
 %changelog
+* Fri Jun 12 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.1-1
+- Update to 1.21.1. (really this time!)
+
+* Sun May 24 2020 Miro Hrončok <mhroncok@redhat.com> - 1.21.0-3
+- Rebuilt for Python 3.9
+
 * Thu Apr 30 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.0-2
 - Add patch to fix issue with admins not being able to force tagging. 
 - Fixes https://pagure.io/koji/issue/2202 upstream.
 
 * Tue Apr 21 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.0-1
-- Update to 1.21.1. Fixes bug #1826406
+- Update to 1.21.0. Fixes bug #1826406
 
 * Fri Mar 06 2020 Kevin Fenzi <kevin@scrye.com> - 1.20.1-1
-- Update to 1.20.1
+- Update to 1.20.0
 
 * Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.20.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
