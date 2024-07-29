@@ -295,8 +295,8 @@ Requires(post): /sbin/service
 Requires(preun): /sbin/chkconfig
 Requires(preun): /sbin/service
 %endif
-Requires: /usr/bin/cvs
-Requires: /usr/bin/svn
+#Requires: /usr/bin/cvs
+#Requires: /usr/bin/svn
 Requires: /usr/bin/git
 Requires: createrepo_c >= 0.10.0
 %if 0%{py3_support} > 1
