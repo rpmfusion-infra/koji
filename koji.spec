@@ -508,6 +508,13 @@ done
 rm -f %{buildroot}/%{_libexecdir}/kojid/mergerepos
 %endif
 
+# Support for sbindir as bindir
+%if 0%{?fedora} >= 42
+mv %{buildroot}/usr/sbin/* %{buildroot}%{_bindir}
+rmdir %{buildroot}/usr/sbin
+%endif
+
+
 %files
 %{_bindir}/*
 %config(noreplace) /etc/koji.conf
