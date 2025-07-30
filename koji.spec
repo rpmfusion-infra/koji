@@ -2,8 +2,13 @@
 # https://fedoraproject.org/wiki/Changes/No_more_automagic_Python_bytecompilation_phase_2
 %global _python_bytecompile_extra 0
 
-%bcond_without python2
+%if 0%{?fedora} || 0%{?rhel} > 7
+%bcond_with    python2
 %bcond_without python3
+%else
+%bcond_without python2
+%bcond_with    python3
+%endif
 
 # We can build varying amounts of Koji for python2 and python3 based on
 # the py[23]_support macro values. Valid values are:
@@ -31,18 +36,6 @@
 # no py2 after F31
 %define py2_support 0
 %define py3_support 2
-%else
-# Keep some minimal python2 in f30 for now
-%if 0%{?fedora} == 30
-%define py2_support 1
-%define py3_support 2
-%else
-%if 0%{?fedora}
-# match what the older Fedoras already have
-%define py2_support 2
-%define py3_support 1
-%endif
-%endif
 %endif
 
 # Lastly enforce the bcond parameters
@@ -57,6 +50,11 @@
 # use python3
 %define __python %{__python3}
 %endif
+
+%if 0%{?fedora}
+%define __python %{__python3}
+%endif
+
 
 # Compatibility with RHEL. These macros have been added to EPEL but
 # not yet to RHEL proper.
@@ -101,6 +99,7 @@ Requires: python2-%{name} = %{version}-%{release}
 Requires: python-libcomps
 %endif
 %endif
+BuildRequires: make
 %if %{use_systemd}
 BuildRequires: systemd
 BuildRequires: pkgconfig
@@ -149,6 +148,9 @@ Requires: python%{python3_pkgversion}-requests
 Requires: python%{python3_pkgversion}-requests-kerberos
 Requires: python%{python3_pkgversion}-dateutil
 Requires: python%{python3_pkgversion}-six
+%if 0%{?fedora} && 0%{?fedora} >= 39
+Requires: python%{python3_pkgversion}-zombie-imp
+%endif
 # Since we don't have metadata here, provide the 'normal' python provides manually.
 Provides: python%{python3_version}dist(%{name}) = %{version}
 Provides: python%{python3_pkgversion}dist(%{name}) = %{version}
