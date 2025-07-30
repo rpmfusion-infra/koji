@@ -77,7 +77,7 @@
 
 Name: koji
 Version: 1.21.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -724,8 +724,10 @@ fi
 %endif
 
 %changelog
-* Wed Jul 30 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-1
-- Update to 1.21.2
+* Wed Jul 30 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-2
+- Rebase to 1.21.2
+- Apply previous patches
+- Backport  --arch-expand support
 
 * Fri Jun 12 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.1-1
 - Update to 1.21.1. (really this time!)
