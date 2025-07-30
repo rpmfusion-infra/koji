@@ -78,7 +78,7 @@
 %endif
 
 Name: koji
-Version: 1.21.1
+Version: 1.21.2
 Release: 1%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
@@ -706,6 +706,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 30 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-1
+- Update to 1.21.2
+
 * Fri Jun 12 2020 Kevin Fenzi <kevin@scrye.com> - 1.21.1-1
 - Update to 1.21.1. (really this time!)
 
