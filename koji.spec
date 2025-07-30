@@ -86,6 +86,22 @@ Source0: https://releases.pagure.org/koji/koji-%{version}.tar.bz2
 
 # Patches already upstream
 
+Patch0: 0001-kojid-remove-bootstrap-dir.patch
+Patch1: 0002-kojid-use-mergerepo_c-for-all-merge-modes.patch
+Patch2: 0003-fix-required-version.patch
+Patch3: 0004-make-sure-we-fall-back-to-mergerepos-on-python2.patch
+Patch4: 0005-safe-convertion-from-tuple-to-str-for-error-msg.patch
+Patch5: 0006-do-not-break-things-when-mergerepo_c-version-is-not-.patch
+Patch6: 0007-flake8-W605-invalid-escape-sequence-d.patch
+Patch7: 0008-depress-Exception-when-checking-mergerepo_c-version.patch
+Patch8: 0009-TaskManager-clean-both-result-and-results-dirs.patch
+Patch9: 0010-Allow-user-on-git-git-http-git-https-and-git-rsync-s.patch
+Patch10: 0011-Enable-fetching-any-ref-from-git-repo.patch
+Patch11: 0012-rpmdiff-replace-deprecated-rpm-call.patch
+Patch12: 0013-alternate-approach.patch
+Patch13: 0014-Emulate-old-list-data.patch
+Patch14: 0015-Change-PYVER-implementation.patch
+
 # Not upstreamable
 Patch100: fedora-config.patch
 
