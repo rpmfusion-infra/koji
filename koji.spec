@@ -77,7 +77,7 @@
 
 Name: koji
 Version: 1.21.2
-Release: 5%{?dist}
+Release: 6%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -439,6 +439,14 @@ koji-web is a web UI to the Koji system.
 %prep
 %autosetup -p1
 
+%if 0%{?fedora} > 42 || 0%{?rhel} >= 10
+# Create a sysusers.d config file
+cat >koji.sysusers.conf <<EOF
+u kojibuilder - - /builddir /bin/bash
+m kojibuilder mock
+EOF
+%endif
+
 
 %build
 # Nothing to build
@@ -517,6 +525,10 @@ rm -f %{buildroot}/%{_libexecdir}/kojid/mergerepos
 %if 0%{?fedora} >= 42
 mv %{buildroot}/usr/sbin/* %{buildroot}%{_bindir}
 rmdir %{buildroot}/usr/sbin
+%endif
+
+%if 0%{?fedora} > 42
+install -m0644 -D koji.sysusers.conf %{buildroot}%{_sysusersdir}/koji.conf
 %endif
 
 
@@ -650,9 +662,12 @@ rmdir %{buildroot}/usr/sbin
 %dir /etc/kojid
 %config(noreplace) /etc/kojid/kojid.conf
 %attr(-,kojibuilder,kojibuilder) /etc/mock/koji
-
+%if 0%{?fedora} > 42 || 0%{?rhel} >= 10
+%{_sysusersdir}/koji.conf
+%else
 %pre builder
 /usr/sbin/useradd -r -s /bin/bash -G mock -d /builddir -M kojibuilder 2>/dev/null ||:
+%endif
 
 %if %{use_systemd}
 
@@ -736,8 +751,11 @@ fi
 %endif
 
 %changelog
-* Mon Dec 29 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-5
+* Mon Dec 29 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-6
 - Backport workaround NFS gliches
+
+* Sat Dec 20 2025 Leigh Scott <leigh123linux@gmail.com> - 1.21.2-5
+- Add sysusers.d handling
 
 * Thu Jul 31 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-4
 - Rebase patches
