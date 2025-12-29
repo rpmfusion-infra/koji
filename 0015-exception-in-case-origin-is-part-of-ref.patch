@@ -1,0 +1,52 @@
+From 0522f976b2fcdbabd503fde9889eeec9cd207573 Mon Sep 17 00:00:00 2001
+From: Tomas Kopecek <tkopecek@redhat.com>
+Date: Fri, 23 Sep 2022 11:15:46 +0200
+Subject: [PATCH 15/20] exception in case origin/ is part of ref
+
+---
+ koji/daemon.py | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/koji/daemon.py b/koji/daemon.py
+index 84fe1cfb0bc8..6051039c69e7 100644
+--- a/koji/daemon.py
++++ b/koji/daemon.py
+@@ -466,11 +466,16 @@ class SCM(object):
+                 checkout_path = os.path.basename(self.repository[:-4])
+                 commonrepo = os.path.dirname(gitrepo[:-4]) + '/common.git'
+ 
++            # git-reset happily accepted origin/x spec, fetch has it split
++            if self.revision.startswith('origin/'):
++                rev = self.revision[7:]
++            else:
++                rev = self.revision
+             sourcedir = '%s/%s' % (scmdir, checkout_path)
+             module_checkout_cmd = ['git', 'clone', '-n', gitrepo, sourcedir]
+             common_checkout_cmd = ['git', 'clone', commonrepo, 'common']
+             update_checkout_cmds = [
+-                ['git', 'fetch', 'origin', self.revision, 'KOJI_FETCH_HEAD'],
++                ['git', 'fetch', 'origin', '%s:KOJI_FETCH_HEAD' % rev],
+                 ['git', 'reset', '--hard', 'KOJI_FETCH_HEAD']
+             ]
+             update_checkout_dir = sourcedir
+@@ -499,11 +504,16 @@ class SCM(object):
+                 checkout_path = os.path.basename(self.repository[:-4])
+                 commonrepo = os.path.dirname(gitrepo[:-4]) + '/common.git'
+ 
++            # git-reset happily accepted origin/x spec, fetch has it split
++            if self.revision.startswith('origin/'):
++                rev = self.revision[7:]
++            else:
++                rev = self.revision
+             sourcedir = '%s/%s' % (scmdir, checkout_path)
+             module_checkout_cmd = ['git', 'clone', '-n', gitrepo, sourcedir]
+             common_checkout_cmd = ['git', 'clone', commonrepo, 'common']
+             update_checkout_cmds = [
+-                ['git', 'fetch', 'origin', self.revision, 'KOJI_FETCH_HEAD'],
++                ['git', 'fetch', 'origin', '%s:KOJI_FETCH_HEAD' % rev],
+                 ['git', 'reset', '--hard', 'KOJI_FETCH_HEAD']
+             ]
+             update_checkout_dir = sourcedir
+-- 
+2.52.0
+

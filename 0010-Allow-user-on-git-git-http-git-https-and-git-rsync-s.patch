@@ -1,0 +1,30 @@
+From 37d223b1907d2c03a745c3f549f7d84cdc5b8234 Mon Sep 17 00:00:00 2001
+From: Jana Cupova <root@localhost>
+Date: Tue, 12 Oct 2021 10:22:29 +0200
+Subject: [PATCH 10/20] Allow user on git://, git+http://, git+https://, and
+ git+rsync:// scheme
+
+Fixes: https://pagure.io/koji/issue/2868
+---
+ koji/daemon.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/koji/daemon.py b/koji/daemon.py
+index 1422de610027..aaa6418d83d8 100644
+--- a/koji/daemon.py
++++ b/koji/daemon.py
+@@ -449,7 +449,10 @@ class SCM(object):
+             scheme = self.scheme
+             if '+' in scheme:
+                 scheme = scheme.split('+')[1]
+-            gitrepo = '%s%s%s' % (scheme, self.host, self.repository)
++            if self.user:
++                gitrepo = '%s%s@%s%s' % (scheme, self.user, self.host, self.repository)
++            else:
++                gitrepo = '%s%s%s' % (scheme, self.host, self.repository)
+             commonrepo = os.path.dirname(gitrepo) + '/common'
+             checkout_path = os.path.basename(self.repository)
+             if self.repository.endswith('/.git'):
+-- 
+2.52.0
+

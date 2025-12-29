@@ -1,0 +1,103 @@
+From e3505220a3da3e3077fea70290fb5027412b370b Mon Sep 17 00:00:00 2001
+From: Nicolas Chauvet <kwizart@gmail.com>
+Date: Mon, 29 Jul 2024 15:44:30 +0200
+Subject: [PATCH 17/20] Change PYVER implementation
+
+This accomodate python 3.10 and onwards
+---
+ builder/Makefile         | 2 +-
+ cli/Makefile             | 2 +-
+ cli/koji_cli/Makefile    | 2 +-
+ hub/Makefile             | 2 +-
+ koji/Makefile            | 2 +-
+ plugins/Makefile         | 2 +-
+ www/lib/kojiweb/Makefile | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/builder/Makefile b/builder/Makefile
+index b1373355998e..32e981c9f472 100644
+--- a/builder/Makefile
++++ b/builder/Makefile
+@@ -1,4 +1,4 @@
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.1s" %(sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print(".".join(sys.version.split(".")[:1]))')
+ 
+ BINFILES = kojid
+ LIBEXECFILES = mergerepos
+diff --git a/cli/Makefile b/cli/Makefile
+index d5cca8416ee4..68a355ec0280 100644
+--- a/cli/Makefile
++++ b/cli/Makefile
+@@ -1,7 +1,7 @@
+ SUBDIRS=koji_cli
+ 
+ PACKAGE = $(shell basename `pwd`)
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.3s" %(sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+ PYSYSDIR := $(shell $(PYTHON) -c 'import sys; print(sys.prefix)')
+ PYLIBDIR = $(PYSYSDIR)/lib/python$(PYVER)
+ PKGDIR = $(PYLIBDIR)/site-packages
+diff --git a/cli/koji_cli/Makefile b/cli/koji_cli/Makefile
+index c7c460a96608..6287cd057a3e 100644
+--- a/cli/koji_cli/Makefile
++++ b/cli/koji_cli/Makefile
+@@ -1,7 +1,7 @@
+ PYFILES = $(wildcard *.py)
+ 
+ PACKAGE = $(shell basename `pwd`)
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.3s" % (sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+ PYSYSDIR := $(shell $(PYTHON) -c 'import sys; print(sys.prefix)')
+ PYLIBDIR = $(PYSYSDIR)/lib/python$(PYVER)
+ PKGDIR = $(PYLIBDIR)/site-packages/$(PACKAGE)
+diff --git a/hub/Makefile b/hub/Makefile
+index e8fe65176265..e4451417b525 100644
+--- a/hub/Makefile
++++ b/hub/Makefile
+@@ -1,6 +1,6 @@
+ PACKAGE = $(shell basename `pwd`)
+ PYFILES = $(wildcard *.py)
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.3s" %(sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+ PYSYSDIR := $(shell $(PYTHON) -c 'import sys; print(sys.prefix)')
+ PYLIBDIR = $(PYSYSDIR)/lib/python$(PYVER)
+ PKGDIR = $(PYLIBDIR)/site-packages/$(PACKAGE)
+diff --git a/koji/Makefile b/koji/Makefile
+index df2991c7d3d3..140e5d2a1e88 100644
+--- a/koji/Makefile
++++ b/koji/Makefile
+@@ -2,7 +2,7 @@ PACKAGE = $(shell basename `pwd`)
+ PYFILES = $(wildcard *.py)
+ PYSCRIPTS =
+ SUBDIRS =
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.3s" % (sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+ PYSYSDIR := $(shell $(PYTHON) -c 'import sys; print(sys.prefix)')
+ PYLIBDIR = $(PYSYSDIR)/lib/python$(PYVER)
+ PKGDIR = $(PYLIBDIR)/site-packages/$(PACKAGE)
+diff --git a/plugins/Makefile b/plugins/Makefile
+index 690e5c363c5c..8888bd65330d 100644
+--- a/plugins/Makefile
++++ b/plugins/Makefile
+@@ -1,5 +1,5 @@
+ PYMAJORVER := $(shell $(PYTHON) -c 'import sys; print(sys.version_info[0])')
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.3s" %(sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+ PYSYSDIR := $(shell $(PYTHON) -c 'import sys; print(sys.prefix)')
+ PYLIBDIR = $(PYSYSDIR)/lib/python$(PYVER)
+ PKGDIR = $(PYLIBDIR)/site-packages
+diff --git a/www/lib/kojiweb/Makefile b/www/lib/kojiweb/Makefile
+index e23fb4db2ed1..f8557b85f1bd 100644
+--- a/www/lib/kojiweb/Makefile
++++ b/www/lib/kojiweb/Makefile
+@@ -1,6 +1,6 @@
+ PACKAGE = $(shell basename `pwd`)
+ PYFILES = $(wildcard *.py)
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.3s" % (sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+ PYSYSDIR := $(shell $(PYTHON) -c 'import sys; print(sys.prefix)')
+ PYLIBDIR = $(PYSYSDIR)/lib/python$(PYVER)
+ PKGDIR = $(PYLIBDIR)/site-packages/$(PACKAGE)
+-- 
+2.52.0
+

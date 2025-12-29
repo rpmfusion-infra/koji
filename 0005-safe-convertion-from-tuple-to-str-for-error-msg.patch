@@ -1,0 +1,26 @@
+From 8b262872a70ccb563a72aceeab012a7cd4cf04e2 Mon Sep 17 00:00:00 2001
+From: Yuming Zhu <yzhu@redhat.com>
+Date: Thu, 16 Jul 2020 17:19:38 +0800
+Subject: [PATCH 05/20] safe convertion from tuple to str for error msg
+
+---
+ builder/kojid | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/builder/kojid b/builder/kojid
+index 41b4f13377bc..a1c39ad66d0d 100755
+--- a/builder/kojid
++++ b/builder/kojid
+@@ -5536,7 +5536,8 @@ class CreaterepoTask(BaseTaskHandler):
+             elif six.PY3:
+                 # koji's mergerepos script only works on python2
+                 raise koji.GenericError("mergerepo_c is not installed or has low version: "
+-                                        "%s (0.13.0 needed for --simple)" % mergerepo_c_version)
++                                        "%s (0.13.0 needed for --simple)" %
++                                        ".".join([str(d) for d in mergerepo_c_version or [None]]))
+             else:
+                 cmd = ['/usr/libexec/kojid/mergerepos',
+                        '--mode', 'simple',
+-- 
+2.52.0
+

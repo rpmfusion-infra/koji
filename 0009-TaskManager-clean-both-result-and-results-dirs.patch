@@ -1,0 +1,35 @@
+From 61436a2794dde4464e228096e33a63fc160afc74 Mon Sep 17 00:00:00 2001
+From: Yu Ming Zhu <yzhu@redhat.com>
+Date: Wed, 15 Jul 2020 12:03:41 +0000
+Subject: [PATCH 09/20] TaskManager: clean both result and results dirs
+
+fixes: #1988
+---
+ koji/daemon.py | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/koji/daemon.py b/koji/daemon.py
+index 9a77f20ea13c..1422de610027 100644
+--- a/koji/daemon.py
++++ b/koji/daemon.py
+@@ -767,10 +767,13 @@ class TaskManager(object):
+                             self.logger.info("%s: clearing rootdir" % desc2)
+                         for fn in flist:
+                             safe_rmtree("%s/%s" % (rootdir, fn), unmount=True, strict=False)
+-                        resultdir = "%s/result" % d
+-                        if os.path.isdir(resultdir):
+-                            self.logger.info("%s: clearing resultdir" % desc2)
+-                            safe_rmtree(resultdir, unmount=True, strict=False)
++                        # bootstrap's resultdir is 'results', so we try the best to remove both
++                        # 'result(s)' dirs
++                        for r in ('result', 'results'):
++                            resultdir = "%s/%s" % (d, r)
++                            if os.path.isdir(resultdir):
++                                self.logger.info("%s: clearing resultdir: %s" % (desc2, resultdir))
++                                safe_rmtree(resultdir, unmount=True, strict=False)
+                 else:
+                     self.logger.debug("Recent buildroot: %s: %i seconds" % (desc, age))
+         self.logger.debug("Local buildroots: %d" % len(local_br))
+-- 
+2.52.0
+

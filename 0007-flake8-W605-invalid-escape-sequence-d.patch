@@ -1,0 +1,25 @@
+From c1bd58c21d5c0def25b84f9cab94086e8e55ae3a Mon Sep 17 00:00:00 2001
+From: Yu Ming Zhu <yzhu@redhat.com>
+Date: Wed, 15 Jul 2020 13:44:26 +0000
+Subject: [PATCH 07/20] flake8: W605 invalid escape sequence '\d'
+
+---
+ builder/kojid | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builder/kojid b/builder/kojid
+index 1a120c80542b..f4c5986fad81 100755
+--- a/builder/kojid
++++ b/builder/kojid
+@@ -5490,7 +5490,7 @@ class CreaterepoTask(BaseTaskHandler):
+             return None
+         out = out.decode().strip()
+         # Expects output like: "Version: 0.15.11 (Features: DeltaRPM LegacyWeakdeps )"
+-        m = re.match('Version: (\d+).(\d+).(\d+).*', out)
++        m = re.match(r'Version: (\d+).(\d+).(\d+).*', out)
+         if not m:
+             self.logger.warning("Unable to parse mergerepo_c version")
+             return None
+-- 
+2.52.0
+

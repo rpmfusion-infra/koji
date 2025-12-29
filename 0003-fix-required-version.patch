@@ -1,0 +1,49 @@
+From 92c50eb759fd6da4e30ca49d88a1105796d92125 Mon Sep 17 00:00:00 2001
+From: Tomas Kopecek <tkopecek@redhat.com>
+Date: Tue, 30 Jun 2020 13:12:58 +0200
+Subject: [PATCH 03/20] fix required version
+
+---
+ builder/Makefile | 4 ++--
+ builder/kojid    | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/builder/Makefile b/builder/Makefile
+index dccac7872a28..b1373355998e 100644
+--- a/builder/Makefile
++++ b/builder/Makefile
+@@ -1,4 +1,4 @@
+-PYVER := $(shell $(PYTHON) -c 'import sys; print("%.3s" %(sys.version))')
++PYVER := $(shell $(PYTHON) -c 'import sys; print("%.1s" %(sys.version))')
+ 
+ BINFILES = kojid
+ LIBEXECFILES = mergerepos
+@@ -23,7 +23,7 @@ _install:
+ 	mkdir -p $(DESTDIR)/usr/sbin
+ 	install -p -m 755 $(BINFILES) $(DESTDIR)/usr/sbin
+ 
+-	@if [ "$(PYVER)" -gt 2 ] ; then \
++	@if [ "$(PYVER)" -lt 3 ] ; then \
+ 		mkdir -p $(DESTDIR)/usr/libexec/kojid; \
+ 		install -p -m 755 $(LIBEXECFILES) $(DESTDIR)/usr/libexec/kojid; \
+ 	fi
+diff --git a/builder/kojid b/builder/kojid
+index b92f5d61de60..c0b2bb861f65 100755
+--- a/builder/kojid
++++ b/builder/kojid
+@@ -5529,9 +5529,9 @@ class CreaterepoTask(BaseTaskHandler):
+         if merge_mode == 'simple':
+             if self.options.use_createrepo_c or six.PY3:
+                 version = self._get_mergerepo_c_version()
+-                if version < (0, 15, 1):
+-                    raise koji.GenericError("mergerepo_c is not installed or has low "
+-                                            "version: %s (0.15.1 - required)" % version)
++                if version < (0, 13, 0):
++                    raise koji.GenericError("mergerepo_c is not installed or has low version: "
++                                            "%s (0.13.0 - required for --simple)" % version)
+                 cmd = ['/usr/bin/mergerepo_c', '--koji', '--simple']
+             else:
+                 cmd = ['/usr/libexec/kojid/mergerepos',
+-- 
+2.52.0
+

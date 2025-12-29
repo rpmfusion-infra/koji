@@ -1,0 +1,1970 @@
+From c82161a7689ac0427a491f8467f7862d8645fca3 Mon Sep 17 00:00:00 2001
+From: Tomas Kopecek <tkopecek@redhat.com>
+Date: Mon, 14 Sep 2020 12:56:45 +0200
+Subject: [PATCH 19/20] remove unittest2
+
+---
+ tests/test_builder/test_build_notification.py       | 7 +------
+ tests/test_builder/test_choose_taskarch.py          | 5 +----
+ tests/test_builder/test_delay_times.py              | 5 +----
+ tests/test_builder/test_taskparams.py               | 5 +----
+ tests/test_builder/test_volume_id.py                | 5 +----
+ tests/test_cli/test_activate_session.py             | 5 +----
+ tests/test_cli/test_add_group.py                    | 5 +----
+ tests/test_cli/test_add_group_pkg.py                | 5 +----
+ tests/test_cli/test_add_group_req.py                | 5 +----
+ tests/test_cli/test_add_host_to_channel.py          | 5 +----
+ tests/test_cli/test_add_notification.py             | 5 +----
+ tests/test_cli/test_add_pkg.py                      | 5 +----
+ tests/test_cli/test_add_tag.py                      | 5 +----
+ tests/test_cli/test_add_user.py                     | 5 +----
+ tests/test_cli/test_add_volume.py                   | 5 +----
+ tests/test_cli/test_assign_task.py                  | 7 +------
+ tests/test_cli/test_block_group_pkg.py              | 5 +----
+ tests/test_cli/test_block_group_req.py              | 5 +----
+ tests/test_cli/test_call.py                         | 5 +----
+ tests/test_cli/test_chain_build.py                  | 5 +----
+ tests/test_cli/test_clone_tag.py                    | 5 +----
+ tests/test_cli/test_disable_host.py                 | 5 +----
+ tests/test_cli/test_disable_user.py                 | 5 +----
+ tests/test_cli/test_dist_repo.py                    | 5 +----
+ tests/test_cli/test_download_file.py                | 5 +----
+ tests/test_cli/test_edit_external_repo.py           | 5 +----
+ tests/test_cli/test_edit_host.py                    | 5 +----
+ tests/test_cli/test_edit_notification.py            | 5 +----
+ tests/test_cli/test_edit_user.py                    | 5 +----
+ tests/test_cli/test_enable_host.py                  | 5 +----
+ tests/test_cli/test_enable_user.py                  | 5 +----
+ tests/test_cli/test_grant_cg_access.py              | 5 +----
+ tests/test_cli/test_grant_permission.py             | 5 +----
+ tests/test_cli/test_hello.py                        | 5 +----
+ tests/test_cli/test_image_build.py                  | 5 +----
+ tests/test_cli/test_image_build_indirection.py      | 5 +----
+ tests/test_cli/test_import.py                       | 5 +----
+ tests/test_cli/test_import_cg.py                    | 5 +----
+ tests/test_cli/test_import_comps.py                 | 5 +----
+ tests/test_cli/test_import_sig.py                   | 5 +----
+ tests/test_cli/test_list_api.py                     | 5 +----
+ tests/test_cli/test_list_channels.py                | 5 +----
+ tests/test_cli/test_list_commands.py                | 5 +----
+ tests/test_cli/test_list_groups.py                  | 5 +----
+ tests/test_cli/test_list_notifications.py           | 5 +----
+ tests/test_cli/test_list_permissions.py             | 5 +----
+ tests/test_cli/test_list_tasks.py                   | 5 +----
+ tests/test_cli/test_list_volumes.py                 | 5 +----
+ tests/test_cli/test_load_plugins.py                 | 5 +----
+ tests/test_cli/test_maven_build.py                  | 5 +----
+ tests/test_cli/test_maven_chain.py                  | 5 +----
+ tests/test_cli/test_mock_config.py                  | 5 +----
+ tests/test_cli/test_move_build.py                   | 5 +----
+ tests/test_cli/test_regen_repo.py                   | 5 +----
+ tests/test_cli/test_remove_channel.py               | 5 +----
+ tests/test_cli/test_remove_host_from_channel.py     | 5 +----
+ tests/test_cli/test_remove_notification.py          | 5 +----
+ tests/test_cli/test_remove_pkg.py                   | 5 +----
+ tests/test_cli/test_rename_channel.py               | 5 +----
+ tests/test_cli/test_restart_host.py                 | 5 +----
+ tests/test_cli/test_resubmit.py                     | 5 +----
+ tests/test_cli/test_revoke_cg_access.py             | 5 +----
+ tests/test_cli/test_revoke_permission.py            | 5 +----
+ tests/test_cli/test_running_in_bg.py                | 5 +----
+ tests/test_cli/test_search.py                       | 5 +----
+ tests/test_cli/test_set_build_volume.py             | 5 +----
+ tests/test_cli/test_set_pkg_arches.py               | 5 +----
+ tests/test_cli/test_set_pkg_owner.py                | 5 +----
+ tests/test_cli/test_set_task_priority.py            | 5 +----
+ tests/test_cli/test_spin_commands.py                | 5 +----
+ tests/test_cli/test_tag_build.py                    | 5 +----
+ tests/test_cli/test_taskinfo.py                     | 5 +----
+ tests/test_cli/test_unblock_group_pkg.py            | 5 +----
+ tests/test_cli/test_unblock_group_req.py            | 5 +----
+ tests/test_cli/test_unblock_pkg.py                  | 5 +----
+ tests/test_cli/test_unique_path.py                  | 5 +----
+ tests/test_cli/test_upload_progress_callback.py     | 5 +----
+ tests/test_cli/test_wait_repo.py                    | 5 +----
+ tests/test_cli/test_watch_tasks.py                  | 5 +----
+ tests/test_cli/test_wrapper_rpm.py                  | 5 +----
+ tests/test_cli/test_write_signed_rpm.py             | 5 +----
+ tests/test_cli/utils.py                             | 5 +----
+ tests/test_docs_version.py                          | 5 +----
+ tests/test_hub/test_models/test_host.py             | 5 +----
+ tests/test_kojira/test_repo_manager.py              | 5 +----
+ tests/test_lib/test_argspec.py                      | 5 +----
+ tests/test_lib/test_auth.py                         | 5 +----
+ tests/test_lib/test_base64.py                       | 5 +----
+ tests/test_lib/test_check_sigmd5.py                 | 5 +----
+ tests/test_lib/test_client_session.py               | 5 +----
+ tests/test_lib/test_context.py                      | 5 +----
+ tests/test_lib/test_decode_bytes.py                 | 5 +----
+ tests/test_lib/test_encode_datetime.py              | 5 +----
+ tests/test_lib/test_file_ops.py                     | 5 +----
+ tests/test_lib/test_fixEncoding.py                  | 5 +----
+ tests/test_lib/test_format_time.py                  | 5 +----
+ tests/test_lib/test_gen_mock_config.py              | 5 +----
+ tests/test_lib/test_grab_session_options.py         | 5 +----
+ tests/test_lib/test_gssapi.py                       | 5 +----
+ tests/test_lib/test_multicall_session.py            | 5 +----
+ tests/test_lib/test_parse_arches.py                 | 5 +----
+ tests/test_lib/test_parsers.py                      | 5 +----
+ tests/test_lib/test_plugin.py                       | 5 +----
+ tests/test_lib/test_policy.py                       | 5 +----
+ tests/test_lib/test_profiles.py                     | 5 +----
+ tests/test_lib/test_restart_tasks.py                | 5 +----
+ tests/test_lib/test_tasks.py                        | 5 +----
+ tests/test_lib/test_utils.py                        | 5 +----
+ tests/test_lib/test_xmlrpcplus.py                   | 5 +----
+ tests/test_plugins/test_protonmsg.py                | 5 +----
+ tests/test_plugins/test_runroot_builder.py          | 5 +----
+ tests/test_plugins/test_runroot_cli.py              | 5 +----
+ tests/test_plugins/test_runroot_hub.py              | 5 +----
+ tests/test_plugins/test_save_failed_tree_builder.py | 5 +----
+ tests/test_plugins/test_save_failed_tree_cli.py     | 5 +----
+ tests/test_scm.py                                   | 5 +----
+ 116 files changed, 116 insertions(+), 468 deletions(-)
+
+diff --git a/tests/test_builder/test_build_notification.py b/tests/test_builder/test_build_notification.py
+index a9056e4f43fa..b9fa4fefa1cb 100644
+--- a/tests/test_builder/test_build_notification.py
++++ b/tests/test_builder/test_build_notification.py
+@@ -5,6 +5,7 @@ import locale
+ import os
+ import tempfile
+ import time
++import unittest
+ 
+ import mock
+ import six
+@@ -13,12 +14,6 @@ import koji
+ import koji.util
+ from .loadkojid import kojid
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
+-
+-
+ 
+ class MyClientSession(koji.ClientSession):
+ 
+diff --git a/tests/test_builder/test_choose_taskarch.py b/tests/test_builder/test_choose_taskarch.py
+index e5cd0dd772c4..a1c2c3f62ace 100644
+--- a/tests/test_builder/test_choose_taskarch.py
++++ b/tests/test_builder/test_choose_taskarch.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import rpm
+ import tempfile
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ import koji
+ from .loadkojid import kojid
+ from six.moves import range
+diff --git a/tests/test_builder/test_delay_times.py b/tests/test_builder/test_delay_times.py
+index 068d267b5897..aa7bb2a8fb2c 100644
+--- a/tests/test_builder/test_delay_times.py
++++ b/tests/test_builder/test_delay_times.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji.daemon
+ import koji
+diff --git a/tests/test_builder/test_taskparams.py b/tests/test_builder/test_taskparams.py
+index 69e915240b4c..9e590f919c52 100644
+--- a/tests/test_builder/test_taskparams.py
++++ b/tests/test_builder/test_taskparams.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import inspect
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ import koji
+ import koji.tasks
+ 
+diff --git a/tests/test_builder/test_volume_id.py b/tests/test_builder/test_volume_id.py
+index c37f6224ae6d..2e557e6f73eb 100644
+--- a/tests/test_builder/test_volume_id.py
++++ b/tests/test_builder/test_volume_id.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import tempfile
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ from .loadkojid import kojid
+ import logging
+ 
+diff --git a/tests/test_cli/test_activate_session.py b/tests/test_cli/test_activate_session.py
+index b1ee20a9f4a3..291812519ff1 100644
+--- a/tests/test_cli/test_activate_session.py
++++ b/tests/test_cli/test_activate_session.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import shutil
+ import tempfile
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.lib import activate_session
+ 
+diff --git a/tests/test_cli/test_add_group.py b/tests/test_cli/test_add_group.py
+index a045647396bf..9ecb8b38fd1c 100644
+--- a/tests/test_cli/test_add_group.py
++++ b/tests/test_cli/test_add_group.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ 
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_add_group
+ from . import utils
+diff --git a/tests/test_cli/test_add_group_pkg.py b/tests/test_cli/test_add_group_pkg.py
+index 1531c19b6ff5..dd2fa266e57b 100644
+--- a/tests/test_cli/test_add_group_pkg.py
++++ b/tests/test_cli/test_add_group_pkg.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_add_group_pkg
+ from . import utils
+diff --git a/tests/test_cli/test_add_group_req.py b/tests/test_cli/test_add_group_req.py
+index d8dd90d47564..9502bb7e9138 100644
+--- a/tests/test_cli/test_add_group_req.py
++++ b/tests/test_cli/test_add_group_req.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_add_group_req
+ from . import utils
+diff --git a/tests/test_cli/test_add_host_to_channel.py b/tests/test_cli/test_add_host_to_channel.py
+index 9220bfe0774b..faff87d3f1e5 100644
+--- a/tests/test_cli/test_add_host_to_channel.py
++++ b/tests/test_cli/test_add_host_to_channel.py
+@@ -4,10 +4,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_add_host_to_channel
+ 
+diff --git a/tests/test_cli/test_add_notification.py b/tests/test_cli/test_add_notification.py
+index 7e121d460050..51da4a2c54d0 100644
+--- a/tests/test_cli/test_add_notification.py
++++ b/tests/test_cli/test_add_notification.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import koji
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ from six.moves import StringIO
+ 
+ from koji_cli.commands import handle_add_notification
+diff --git a/tests/test_cli/test_add_pkg.py b/tests/test_cli/test_add_pkg.py
+index 20bca2ab203b..49ea79268ce4 100644
+--- a/tests/test_cli/test_add_pkg.py
++++ b/tests/test_cli/test_add_pkg.py
+@@ -4,10 +4,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ 
+diff --git a/tests/test_cli/test_add_tag.py b/tests/test_cli/test_add_tag.py
+index c24c3e3797c9..1123eabd5e5b 100644
+--- a/tests/test_cli/test_add_tag.py
++++ b/tests/test_cli/test_add_tag.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_add_tag
+ from . import utils
+diff --git a/tests/test_cli/test_add_user.py b/tests/test_cli/test_add_user.py
+index 388f60e1b641..d0604dac85f3 100644
+--- a/tests/test_cli/test_add_user.py
++++ b/tests/test_cli/test_add_user.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_add_user
+ from . import utils
+diff --git a/tests/test_cli/test_add_volume.py b/tests/test_cli/test_add_volume.py
+index 4a0b889f1c95..791517680001 100644
+--- a/tests/test_cli/test_add_volume.py
++++ b/tests/test_cli/test_add_volume.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_add_volume
+ from . import utils
+diff --git a/tests/test_cli/test_assign_task.py b/tests/test_cli/test_assign_task.py
+index c68ef79e4653..c7ab2d3c1e69 100644
+--- a/tests/test_cli/test_assign_task.py
++++ b/tests/test_cli/test_assign_task.py
+@@ -1,12 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+-import os
+ import six
+-import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.commands import handle_assign_task
+diff --git a/tests/test_cli/test_block_group_pkg.py b/tests/test_cli/test_block_group_pkg.py
+index da56e13a2eca..52d6d60e54c6 100644
+--- a/tests/test_cli/test_block_group_pkg.py
++++ b/tests/test_cli/test_block_group_pkg.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_block_group_pkg
+ from . import utils
+diff --git a/tests/test_cli/test_block_group_req.py b/tests/test_cli/test_block_group_req.py
+index 39d4253df2d8..47a79fb134b8 100644
+--- a/tests/test_cli/test_block_group_req.py
++++ b/tests/test_cli/test_block_group_req.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_block_group_req
+ from . import utils
+diff --git a/tests/test_cli/test_call.py b/tests/test_cli/test_call.py
+index 8ffcf89c0d6c..55ff22ba0d04 100644
+--- a/tests/test_cli/test_call.py
++++ b/tests/test_cli/test_call.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import json
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_call
+ from . import utils
+diff --git a/tests/test_cli/test_chain_build.py b/tests/test_cli/test_chain_build.py
+index b8ab16dfbcdf..cf5e8378cc9d 100644
+--- a/tests/test_cli/test_chain_build.py
++++ b/tests/test_cli/test_chain_build.py
+@@ -4,10 +4,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_chain_build
+ 
+diff --git a/tests/test_cli/test_clone_tag.py b/tests/test_cli/test_clone_tag.py
+index eaa3e2567baf..a8302c8d170a 100644
+--- a/tests/test_cli/test_clone_tag.py
++++ b/tests/test_cli/test_clone_tag.py
+@@ -4,10 +4,7 @@ import mock
+ import six
+ from mock import call
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_clone_tag
+ from . import utils
+diff --git a/tests/test_cli/test_disable_host.py b/tests/test_cli/test_disable_host.py
+index 5f44aba86b17..28d59de829e6 100644
+--- a/tests/test_cli/test_disable_host.py
++++ b/tests/test_cli/test_disable_host.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ from koji_cli.commands import handle_disable_host
+diff --git a/tests/test_cli/test_disable_user.py b/tests/test_cli/test_disable_user.py
+index ef1f83c96a5a..2e02ee6497cd 100644
+--- a/tests/test_cli/test_disable_user.py
++++ b/tests/test_cli/test_disable_user.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_disable_user
+ from . import utils
+diff --git a/tests/test_cli/test_dist_repo.py b/tests/test_cli/test_dist_repo.py
+index 0056fa203ce0..d8516c4f1501 100644
+--- a/tests/test_cli/test_dist_repo.py
++++ b/tests/test_cli/test_dist_repo.py
+@@ -3,10 +3,7 @@ from __future__ import print_function
+ import copy
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ 
+ from koji_cli.commands import handle_dist_repo
+diff --git a/tests/test_cli/test_download_file.py b/tests/test_cli/test_download_file.py
+index c0bb333b9804..894398f63a1c 100644
+--- a/tests/test_cli/test_download_file.py
++++ b/tests/test_cli/test_download_file.py
+@@ -6,10 +6,7 @@ import tempfile
+ import os
+ import requests_mock
+ import requests
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.lib import download_file, _download_progress
+ 
+diff --git a/tests/test_cli/test_edit_external_repo.py b/tests/test_cli/test_edit_external_repo.py
+index dda7bddff96a..6adf1c834f23 100644
+--- a/tests/test_cli/test_edit_external_repo.py
++++ b/tests/test_cli/test_edit_external_repo.py
+@@ -2,10 +2,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.commands import handle_edit_external_repo
+diff --git a/tests/test_cli/test_edit_host.py b/tests/test_cli/test_edit_host.py
+index 6b5641f4eee7..1217240d6447 100644
+--- a/tests/test_cli/test_edit_host.py
++++ b/tests/test_cli/test_edit_host.py
+@@ -3,10 +3,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ 
+diff --git a/tests/test_cli/test_edit_notification.py b/tests/test_cli/test_edit_notification.py
+index b265df187dd8..8204709d0571 100644
+--- a/tests/test_cli/test_edit_notification.py
++++ b/tests/test_cli/test_edit_notification.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import koji
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ from six.moves import StringIO
+ 
+ from koji_cli.commands import handle_edit_notification
+diff --git a/tests/test_cli/test_edit_user.py b/tests/test_cli/test_edit_user.py
+index 12e43af31dfa..f36d503c5e0b 100644
+--- a/tests/test_cli/test_edit_user.py
++++ b/tests/test_cli/test_edit_user.py
+@@ -3,10 +3,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ 
+ from koji_cli.commands import handle_edit_user
+diff --git a/tests/test_cli/test_enable_host.py b/tests/test_cli/test_enable_host.py
+index 20fc5ee77fd2..2d101b5e5bd5 100644
+--- a/tests/test_cli/test_enable_host.py
++++ b/tests/test_cli/test_enable_host.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ from koji_cli.commands import handle_enable_host
+diff --git a/tests/test_cli/test_enable_user.py b/tests/test_cli/test_enable_user.py
+index 8145c97f05c3..faf759907c66 100644
+--- a/tests/test_cli/test_enable_user.py
++++ b/tests/test_cli/test_enable_user.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_enable_user
+ from . import utils
+diff --git a/tests/test_cli/test_grant_cg_access.py b/tests/test_cli/test_grant_cg_access.py
+index f445eea9e494..2b63d897a7f9 100644
+--- a/tests/test_cli/test_grant_cg_access.py
++++ b/tests/test_cli/test_grant_cg_access.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_grant_cg_access
+ from . import utils
+diff --git a/tests/test_cli/test_grant_permission.py b/tests/test_cli/test_grant_permission.py
+index b468f00c0cc3..872c3f83363b 100644
+--- a/tests/test_cli/test_grant_permission.py
++++ b/tests/test_cli/test_grant_permission.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_grant_permission
+ from . import utils
+diff --git a/tests/test_cli/test_hello.py b/tests/test_cli/test_hello.py
+index e345c2a484a2..dcf840acd4c0 100644
+--- a/tests/test_cli/test_hello.py
++++ b/tests/test_cli/test_hello.py
+@@ -2,10 +2,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.commands import handle_moshimoshi, _printable_unicode
+diff --git a/tests/test_cli/test_image_build.py b/tests/test_cli/test_image_build.py
+index e1c3adb1b8c9..f1448be0a380 100644
+--- a/tests/test_cli/test_image_build.py
++++ b/tests/test_cli/test_image_build.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import six
+ import os
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_cli/test_image_build_indirection.py b/tests/test_cli/test_image_build_indirection.py
+index 88dda02dd798..939723dab69c 100644
+--- a/tests/test_cli/test_image_build_indirection.py
++++ b/tests/test_cli/test_image_build_indirection.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_cli/test_import.py b/tests/test_cli/test_import.py
+index 623567f37308..654b9b770970 100644
+--- a/tests/test_cli/test_import.py
++++ b/tests/test_cli/test_import.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import os
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.commands import handle_import
+diff --git a/tests/test_cli/test_import_cg.py b/tests/test_cli/test_import_cg.py
+index 1875a51cc6b6..11ca191d7897 100644
+--- a/tests/test_cli/test_import_cg.py
++++ b/tests/test_cli/test_import_cg.py
+@@ -8,10 +8,7 @@ from . import utils
+ 
+ import os
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ 
+ class TestImportCG(utils.CliTestCase):
+diff --git a/tests/test_cli/test_import_comps.py b/tests/test_cli/test_import_comps.py
+index 1f78b87f93e5..e6cc144fc9a0 100644
+--- a/tests/test_cli/test_import_comps.py
++++ b/tests/test_cli/test_import_comps.py
+@@ -4,10 +4,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ try:
+     import libcomps
+diff --git a/tests/test_cli/test_import_sig.py b/tests/test_cli/test_import_sig.py
+index 828ef9b2ecec..074a22750e00 100644
+--- a/tests/test_cli/test_import_sig.py
++++ b/tests/test_cli/test_import_sig.py
+@@ -5,10 +5,7 @@ import mock
+ import random
+ import six
+ from six.moves import range
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ from koji.util import base64encode
+diff --git a/tests/test_cli/test_list_api.py b/tests/test_cli/test_list_api.py
+index 48dfee9d530b..3840e1a360fb 100644
+--- a/tests/test_cli/test_list_api.py
++++ b/tests/test_cli/test_list_api.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import anon_handle_list_api
+ from . import utils
+diff --git a/tests/test_cli/test_list_channels.py b/tests/test_cli/test_list_channels.py
+index 663fb736e730..07e729b519c1 100644
+--- a/tests/test_cli/test_list_channels.py
++++ b/tests/test_cli/test_list_channels.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ from six.moves import StringIO
+ 
+ import koji
+diff --git a/tests/test_cli/test_list_commands.py b/tests/test_cli/test_list_commands.py
+index ef9b1f2bd185..e2659496764b 100644
+--- a/tests/test_cli/test_list_commands.py
++++ b/tests/test_cli/test_list_commands.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import os
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from . import loadcli, utils
+ cli = loadcli.cli
+diff --git a/tests/test_cli/test_list_groups.py b/tests/test_cli/test_list_groups.py
+index 6d595bc7cadb..23246f772fdd 100644
+--- a/tests/test_cli/test_list_groups.py
++++ b/tests/test_cli/test_list_groups.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import six
+ import time
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import anon_handle_list_groups
+ from . import utils
+diff --git a/tests/test_cli/test_list_notifications.py b/tests/test_cli/test_list_notifications.py
+index 01e668abf5cf..12d62a0301d6 100644
+--- a/tests/test_cli/test_list_notifications.py
++++ b/tests/test_cli/test_list_notifications.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ from six.moves import StringIO
+ 
+ import koji
+diff --git a/tests/test_cli/test_list_permissions.py b/tests/test_cli/test_list_permissions.py
+index b817d1fa513c..08c36ce912b3 100644
+--- a/tests/test_cli/test_list_permissions.py
++++ b/tests/test_cli/test_list_permissions.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_list_permissions
+ from . import utils
+diff --git a/tests/test_cli/test_list_tasks.py b/tests/test_cli/test_list_tasks.py
+index 8daebc1a13e3..ac45f298f386 100644
+--- a/tests/test_cli/test_list_tasks.py
++++ b/tests/test_cli/test_list_tasks.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.lib import _list_tasks
+diff --git a/tests/test_cli/test_list_volumes.py b/tests/test_cli/test_list_volumes.py
+index 0df51027d766..4c60bb5d6058 100644
+--- a/tests/test_cli/test_list_volumes.py
++++ b/tests/test_cli/test_list_volumes.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_list_volumes
+ from . import utils
+diff --git a/tests/test_cli/test_load_plugins.py b/tests/test_cli/test_load_plugins.py
+index 7e7e7b115167..c9aa6a351fe6 100644
+--- a/tests/test_cli/test_load_plugins.py
++++ b/tests/test_cli/test_load_plugins.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ 
+ import os
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import mock
+ 
+diff --git a/tests/test_cli/test_maven_build.py b/tests/test_cli/test_maven_build.py
+index fac3cb505cd6..590bc3ca6365 100644
+--- a/tests/test_cli/test_maven_build.py
++++ b/tests/test_cli/test_maven_build.py
+@@ -5,10 +5,7 @@ import optparse
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_maven_build
+ 
+diff --git a/tests/test_cli/test_maven_chain.py b/tests/test_cli/test_maven_chain.py
+index 91429e2d5ed8..1bf48a54c1d7 100644
+--- a/tests/test_cli/test_maven_chain.py
++++ b/tests/test_cli/test_maven_chain.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_maven_chain
+ from . import utils
+diff --git a/tests/test_cli/test_mock_config.py b/tests/test_cli/test_mock_config.py
+index 1ca0d0b899ad..a948aa499f4b 100644
+--- a/tests/test_cli/test_mock_config.py
++++ b/tests/test_cli/test_mock_config.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import anon_handle_mock_config
+ from . import utils
+diff --git a/tests/test_cli/test_move_build.py b/tests/test_cli/test_move_build.py
+index 19b5fedcc75b..68b19d20e7e6 100644
+--- a/tests/test_cli/test_move_build.py
++++ b/tests/test_cli/test_move_build.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_move_build
+ from . import utils
+diff --git a/tests/test_cli/test_regen_repo.py b/tests/test_cli/test_regen_repo.py
+index 90f16b12388c..c19c411b3ce6 100644
+--- a/tests/test_cli/test_regen_repo.py
++++ b/tests/test_cli/test_regen_repo.py
+@@ -3,10 +3,7 @@ from __future__ import print_function
+ import copy
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_regen_repo
+ from . import utils
+diff --git a/tests/test_cli/test_remove_channel.py b/tests/test_cli/test_remove_channel.py
+index 61fe9d56f38a..abfd3bddc9c3 100644
+--- a/tests/test_cli/test_remove_channel.py
++++ b/tests/test_cli/test_remove_channel.py
+@@ -3,10 +3,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_remove_channel
+ 
+diff --git a/tests/test_cli/test_remove_host_from_channel.py b/tests/test_cli/test_remove_host_from_channel.py
+index 35c9cbad4734..811b6b15b55b 100644
+--- a/tests/test_cli/test_remove_host_from_channel.py
++++ b/tests/test_cli/test_remove_host_from_channel.py
+@@ -3,10 +3,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_remove_host_from_channel
+ 
+diff --git a/tests/test_cli/test_remove_notification.py b/tests/test_cli/test_remove_notification.py
+index df253a563f12..8354e1e5cc95 100644
+--- a/tests/test_cli/test_remove_notification.py
++++ b/tests/test_cli/test_remove_notification.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import koji
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from six.moves import StringIO
+ 
+diff --git a/tests/test_cli/test_remove_pkg.py b/tests/test_cli/test_remove_pkg.py
+index bf8e3665f0e8..44a9e8574b3a 100644
+--- a/tests/test_cli/test_remove_pkg.py
++++ b/tests/test_cli/test_remove_pkg.py
+@@ -3,10 +3,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ 
+diff --git a/tests/test_cli/test_rename_channel.py b/tests/test_cli/test_rename_channel.py
+index 9d0835b21e61..573e3faef0ea 100644
+--- a/tests/test_cli/test_rename_channel.py
++++ b/tests/test_cli/test_rename_channel.py
+@@ -3,10 +3,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_rename_channel
+ 
+diff --git a/tests/test_cli/test_restart_host.py b/tests/test_cli/test_restart_host.py
+index a70c91951bb4..27ad36766244 100644
+--- a/tests/test_cli/test_restart_host.py
++++ b/tests/test_cli/test_restart_host.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.commands import handle_restart_hosts
+diff --git a/tests/test_cli/test_resubmit.py b/tests/test_cli/test_resubmit.py
+index 4dfae372022f..f3be8ffabf84 100644
+--- a/tests/test_cli/test_resubmit.py
++++ b/tests/test_cli/test_resubmit.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ from __future__ import print_function
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_resubmit
+ from . import utils
+diff --git a/tests/test_cli/test_revoke_cg_access.py b/tests/test_cli/test_revoke_cg_access.py
+index 9aa381a55e6d..8b3107c4e1a6 100644
+--- a/tests/test_cli/test_revoke_cg_access.py
++++ b/tests/test_cli/test_revoke_cg_access.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_revoke_cg_access
+ from . import utils
+diff --git a/tests/test_cli/test_revoke_permission.py b/tests/test_cli/test_revoke_permission.py
+index f80714523e9d..e532df0b09cd 100644
+--- a/tests/test_cli/test_revoke_permission.py
++++ b/tests/test_cli/test_revoke_permission.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_revoke_permission
+ from . import utils
+diff --git a/tests/test_cli/test_running_in_bg.py b/tests/test_cli/test_running_in_bg.py
+index 0f5169d3ef94..9829782f0492 100644
+--- a/tests/test_cli/test_running_in_bg.py
++++ b/tests/test_cli/test_running_in_bg.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.lib import _running_in_bg
+ 
+diff --git a/tests/test_cli/test_search.py b/tests/test_cli/test_search.py
+index 1d4c6c3d0a78..a6920923e4ce 100644
+--- a/tests/test_cli/test_search.py
++++ b/tests/test_cli/test_search.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import anon_handle_search
+ from . import utils
+diff --git a/tests/test_cli/test_set_build_volume.py b/tests/test_cli/test_set_build_volume.py
+index 85c1850217e6..ab5ee1da5b5d 100644
+--- a/tests/test_cli/test_set_build_volume.py
++++ b/tests/test_cli/test_set_build_volume.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_set_build_volume
+ from . import utils
+diff --git a/tests/test_cli/test_set_pkg_arches.py b/tests/test_cli/test_set_pkg_arches.py
+index 6501e79c628a..fd4ecafb8db4 100644
+--- a/tests/test_cli/test_set_pkg_arches.py
++++ b/tests/test_cli/test_set_pkg_arches.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_set_pkg_arches
+ from . import utils
+diff --git a/tests/test_cli/test_set_pkg_owner.py b/tests/test_cli/test_set_pkg_owner.py
+index 18e57af93dad..03bef5e0caaf 100644
+--- a/tests/test_cli/test_set_pkg_owner.py
++++ b/tests/test_cli/test_set_pkg_owner.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_set_pkg_owner
+ from . import utils
+diff --git a/tests/test_cli/test_set_task_priority.py b/tests/test_cli/test_set_task_priority.py
+index 1455fc0e10b8..15de222b8af8 100644
+--- a/tests/test_cli/test_set_task_priority.py
++++ b/tests/test_cli/test_set_task_priority.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_set_task_priority
+ from . import utils
+diff --git a/tests/test_cli/test_spin_commands.py b/tests/test_cli/test_spin_commands.py
+index f5f3c42c4ef4..9a4ea1a8e6c9 100644
+--- a/tests/test_cli/test_spin_commands.py
++++ b/tests/test_cli/test_spin_commands.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import six
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.commands import handle_spin_livecd, handle_spin_livemedia, handle_spin_appliance, _build_image
+diff --git a/tests/test_cli/test_tag_build.py b/tests/test_cli/test_tag_build.py
+index e82e0070e414..6dc02d820c6f 100644
+--- a/tests/test_cli/test_tag_build.py
++++ b/tests/test_cli/test_tag_build.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_tag_build
+ from . import utils
+diff --git a/tests/test_cli/test_taskinfo.py b/tests/test_cli/test_taskinfo.py
+index d16a22082f06..0245227ad9cb 100644
+--- a/tests/test_cli/test_taskinfo.py
++++ b/tests/test_cli/test_taskinfo.py
+@@ -3,10 +3,7 @@ import collections
+ import mock
+ import six
+ import time
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji_cli.commands import anon_handle_taskinfo, \
+diff --git a/tests/test_cli/test_unblock_group_pkg.py b/tests/test_cli/test_unblock_group_pkg.py
+index d82deb174a2d..7ae184e9b906 100644
+--- a/tests/test_cli/test_unblock_group_pkg.py
++++ b/tests/test_cli/test_unblock_group_pkg.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_unblock_group_pkg
+ from . import utils
+diff --git a/tests/test_cli/test_unblock_group_req.py b/tests/test_cli/test_unblock_group_req.py
+index cd88a9c065f2..5b20a2df2c8d 100644
+--- a/tests/test_cli/test_unblock_group_req.py
++++ b/tests/test_cli/test_unblock_group_req.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_unblock_group_req
+ from . import utils
+diff --git a/tests/test_cli/test_unblock_pkg.py b/tests/test_cli/test_unblock_pkg.py
+index 1d1923bcf7d1..1fb25d14ed7e 100644
+--- a/tests/test_cli/test_unblock_pkg.py
++++ b/tests/test_cli/test_unblock_pkg.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ 
+ from koji_cli.commands import handle_unblock_pkg
+diff --git a/tests/test_cli/test_unique_path.py b/tests/test_cli/test_unique_path.py
+index a223b9a17634..d07613b89ebb 100644
+--- a/tests/test_cli/test_unique_path.py
++++ b/tests/test_cli/test_unique_path.py
+@@ -1,8 +1,5 @@
+ from __future__ import absolute_import
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from six.moves import range
+ 
+diff --git a/tests/test_cli/test_upload_progress_callback.py b/tests/test_cli/test_upload_progress_callback.py
+index 6bcf62f9864c..c291998c2d64 100644
+--- a/tests/test_cli/test_upload_progress_callback.py
++++ b/tests/test_cli/test_upload_progress_callback.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ 
+ from koji_cli.lib import _format_size, _format_secs, _progress_callback
+diff --git a/tests/test_cli/test_wait_repo.py b/tests/test_cli/test_wait_repo.py
+index 09e41c94a3ac..7a388888f26b 100644
+--- a/tests/test_cli/test_wait_repo.py
++++ b/tests/test_cli/test_wait_repo.py
+@@ -3,10 +3,7 @@ from __future__ import print_function
+ import copy
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import anon_handle_wait_repo
+ from . import utils
+diff --git a/tests/test_cli/test_watch_tasks.py b/tests/test_cli/test_watch_tasks.py
+index e95407b977c4..f147038db683 100644
+--- a/tests/test_cli/test_watch_tasks.py
++++ b/tests/test_cli/test_watch_tasks.py
+@@ -4,10 +4,7 @@ import mock
+ import os
+ import six
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ from six.moves import range
+diff --git a/tests/test_cli/test_wrapper_rpm.py b/tests/test_cli/test_wrapper_rpm.py
+index ee69f047db8e..db205c592c49 100644
+--- a/tests/test_cli/test_wrapper_rpm.py
++++ b/tests/test_cli/test_wrapper_rpm.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji_cli.commands import handle_wrapper_rpm
+ from . import utils
+diff --git a/tests/test_cli/test_write_signed_rpm.py b/tests/test_cli/test_write_signed_rpm.py
+index 1c6a07f8f8e9..38643a893a20 100644
+--- a/tests/test_cli/test_write_signed_rpm.py
++++ b/tests/test_cli/test_write_signed_rpm.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import hashlib
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import call
+ import koji
+diff --git a/tests/test_cli/utils.py b/tests/test_cli/utils.py
+index d1c2c9b93ec6..c06a8886b12a 100644
+--- a/tests/test_cli/utils.py
++++ b/tests/test_cli/utils.py
+@@ -5,10 +5,7 @@ import os
+ import six
+ import sys
+ from six.moves import map
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ 
+ PROGNAME = os.path.basename(sys.argv[0]) or 'koji'
+diff --git a/tests/test_docs_version.py b/tests/test_docs_version.py
+index b4f33b1667a0..f99627be0dc3 100644
+--- a/tests/test_docs_version.py
++++ b/tests/test_docs_version.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import os
+ import six
+ import subprocess
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ # docs version lives in docs/source/conf.py
+ TOPDIR = os.path.dirname(__file__) + '/..'
+diff --git a/tests/test_hub/test_models/test_host.py b/tests/test_hub/test_models/test_host.py
+index 1a39a2e98920..950d4821ed1a 100644
+--- a/tests/test_hub/test_models/test_host.py
++++ b/tests/test_hub/test_models/test_host.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ import kojihub
+diff --git a/tests/test_kojira/test_repo_manager.py b/tests/test_kojira/test_repo_manager.py
+index 928a244a4e3c..475bcff62708 100644
+--- a/tests/test_kojira/test_repo_manager.py
++++ b/tests/test_kojira/test_repo_manager.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import time
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_lib/test_argspec.py b/tests/test_lib/test_argspec.py
+index a565a64baf9f..60b3e248bc0c 100644
+--- a/tests/test_lib/test_argspec.py
++++ b/tests/test_lib/test_argspec.py
+@@ -1,8 +1,5 @@
+ from __future__ import absolute_import
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji.util
+ 
+diff --git a/tests/test_lib/test_auth.py b/tests/test_lib/test_auth.py
+index 7aa27d455af5..8dcbd35011a3 100644
+--- a/tests/test_lib/test_auth.py
++++ b/tests/test_lib/test_auth.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ 
+ import mock
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ import six
+ 
+ import koji
+diff --git a/tests/test_lib/test_base64.py b/tests/test_lib/test_base64.py
+index 65d42db9a304..1520f819ad5e 100644
+--- a/tests/test_lib/test_base64.py
++++ b/tests/test_lib/test_base64.py
+@@ -1,10 +1,7 @@
+ # coding=utf-8
+ from __future__ import absolute_import
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji.util import base64encode
+ 
+diff --git a/tests/test_lib/test_check_sigmd5.py b/tests/test_lib/test_check_sigmd5.py
+index ae5a7d8101fe..e126c23c6aae 100644
+--- a/tests/test_lib/test_check_sigmd5.py
++++ b/tests/test_lib/test_check_sigmd5.py
+@@ -3,10 +3,7 @@ from __future__ import absolute_import
+ import os.path
+ import shutil
+ import tempfile
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji.util import check_sigmd5
+ 
+diff --git a/tests/test_lib/test_client_session.py b/tests/test_lib/test_client_session.py
+index 48cbcbe9da82..25b345dd422b 100644
+--- a/tests/test_lib/test_client_session.py
++++ b/tests/test_lib/test_client_session.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import six
+ import weakref
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from koji.xmlrpcplus import Fault
+diff --git a/tests/test_lib/test_context.py b/tests/test_lib/test_context.py
+index 660e6cdff2f1..695a3a5965c8 100644
+--- a/tests/test_lib/test_context.py
++++ b/tests/test_lib/test_context.py
+@@ -3,10 +3,7 @@ import six
+ import time
+ import random
+ from six.moves import range
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji.context import context
+ 
+diff --git a/tests/test_lib/test_decode_bytes.py b/tests/test_lib/test_decode_bytes.py
+index dddaff057bab..7256c5bc0eda 100644
+--- a/tests/test_lib/test_decode_bytes.py
++++ b/tests/test_lib/test_decode_bytes.py
+@@ -1,10 +1,7 @@
+ # coding=utf-8
+ from __future__ import absolute_import
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from koji.util import decode_bytes
+ 
+diff --git a/tests/test_lib/test_encode_datetime.py b/tests/test_lib/test_encode_datetime.py
+index e2a2909f1a72..505c236a8a58 100644
+--- a/tests/test_lib/test_encode_datetime.py
++++ b/tests/test_lib/test_encode_datetime.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import datetime
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji.util
+ from koji.xmlrpcplus import DateTime
+diff --git a/tests/test_lib/test_file_ops.py b/tests/test_lib/test_file_ops.py
+index dfb6069b42cf..1aa2a126d058 100644
+--- a/tests/test_lib/test_file_ops.py
++++ b/tests/test_lib/test_file_ops.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import mock
+ import errno
+diff --git a/tests/test_lib/test_fixEncoding.py b/tests/test_lib/test_fixEncoding.py
+index ab26399f6206..eaf8b97a6413 100644
+--- a/tests/test_lib/test_fixEncoding.py
++++ b/tests/test_lib/test_fixEncoding.py
+@@ -7,10 +7,7 @@ from __future__ import absolute_import
+ import koji
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ 
+ class FixEncodingTestCase(unittest.TestCase):
+diff --git a/tests/test_lib/test_format_time.py b/tests/test_lib/test_format_time.py
+index b780dfa78645..53ab2223982e 100644
+--- a/tests/test_lib/test_format_time.py
++++ b/tests/test_lib/test_format_time.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import datetime
+ import locale
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import six.moves.xmlrpc_client as xmlrpc_client
+ 
+diff --git a/tests/test_lib/test_gen_mock_config.py b/tests/test_lib/test_gen_mock_config.py
+index b6d822a08315..320ba44a264f 100644
+--- a/tests/test_lib/test_gen_mock_config.py
++++ b/tests/test_lib/test_gen_mock_config.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import ast
+ import os
+ import os.path
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_lib/test_grab_session_options.py b/tests/test_lib/test_grab_session_options.py
+index a89fe93c5228..a85c982abf3b 100644
+--- a/tests/test_lib/test_grab_session_options.py
++++ b/tests/test_lib/test_grab_session_options.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import optparse
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_lib/test_gssapi.py b/tests/test_lib/test_gssapi.py
+index cc2dff3503c4..722d2e938789 100644
+--- a/tests/test_lib/test_gssapi.py
++++ b/tests/test_lib/test_gssapi.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ 
+ import mock
+ import os
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_lib/test_multicall_session.py b/tests/test_lib/test_multicall_session.py
+index 15b9142d3c54..c4978e4770ff 100644
+--- a/tests/test_lib/test_multicall_session.py
++++ b/tests/test_lib/test_multicall_session.py
+@@ -1,8 +1,5 @@
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_lib/test_parse_arches.py b/tests/test_lib/test_parse_arches.py
+index a5aaeac8300d..00d0d77a489a 100644
+--- a/tests/test_lib/test_parse_arches.py
++++ b/tests/test_lib/test_parse_arches.py
+@@ -1,9 +1,6 @@
+ # coding: utf-8
+ from __future__ import absolute_import
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ import koji
+ 
+ class TestParseArchesString(unittest.TestCase):
+diff --git a/tests/test_lib/test_parsers.py b/tests/test_lib/test_parsers.py
+index 8c67f6716a80..e49217a359be 100644
+--- a/tests/test_lib/test_parsers.py
++++ b/tests/test_lib/test_parsers.py
+@@ -6,10 +6,7 @@ from __future__ import absolute_import
+ import mock
+ import os
+ import rpm
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_lib/test_plugin.py b/tests/test_lib/test_plugin.py
+index 099877fe0b8d..710a5c08a98d 100644
+--- a/tests/test_lib/test_plugin.py
++++ b/tests/test_lib/test_plugin.py
+@@ -3,10 +3,7 @@ import copy
+ import datetime
+ import mock
+ from six.moves import range
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ import koji.util
+diff --git a/tests/test_lib/test_policy.py b/tests/test_lib/test_policy.py
+index 26cb1050514b..fe907fd37639 100644
+--- a/tests/test_lib/test_policy.py
++++ b/tests/test_lib/test_policy.py
+@@ -1,8 +1,5 @@
+ from __future__ import absolute_import
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from nose.tools import raises
+ 
+diff --git a/tests/test_lib/test_profiles.py b/tests/test_lib/test_profiles.py
+index 00825706ded3..1ec72e71e24e 100644
+--- a/tests/test_lib/test_profiles.py
++++ b/tests/test_lib/test_profiles.py
+@@ -6,10 +6,7 @@ import traceback
+ import mock
+ from six.moves import range
+ 
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ class ProfilesTestCase(unittest.TestCase):
+ 
+diff --git a/tests/test_lib/test_restart_tasks.py b/tests/test_lib/test_restart_tasks.py
+index 860865c631d9..d307585b8602 100644
+--- a/tests/test_lib/test_restart_tasks.py
++++ b/tests/test_lib/test_restart_tasks.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import shutil
+ import tempfile
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji.tasks
+ 
+diff --git a/tests/test_lib/test_tasks.py b/tests/test_lib/test_tasks.py
+index ef2c04fd2411..8dcd123be0c6 100644
+--- a/tests/test_lib/test_tasks.py
++++ b/tests/test_lib/test_tasks.py
+@@ -3,10 +3,7 @@ import random
+ import shutil
+ import six
+ from six.moves import range
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from os import path, makedirs
+ from tempfile import gettempdir
+diff --git a/tests/test_lib/test_utils.py b/tests/test_lib/test_utils.py
+index c2b2e21e5401..fa8565375a2c 100644
+--- a/tests/test_lib/test_utils.py
++++ b/tests/test_lib/test_utils.py
+@@ -9,10 +9,7 @@ import resource
+ import six.moves.configparser
+ import time
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import requests_mock
+ from mock import call, patch
+diff --git a/tests/test_lib/test_xmlrpcplus.py b/tests/test_lib/test_xmlrpcplus.py
+index 7ea542438ece..43974ef97527 100644
+--- a/tests/test_lib/test_xmlrpcplus.py
++++ b/tests/test_lib/test_xmlrpcplus.py
+@@ -1,10 +1,7 @@
+ # coding=utf-8
+ from __future__ import absolute_import
+ from six.moves import range
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from six.moves import xmlrpc_client
+ from koji import xmlrpcplus
+diff --git a/tests/test_plugins/test_protonmsg.py b/tests/test_plugins/test_protonmsg.py
+index 4bcad7e4af13..c6725a2b85d3 100644
+--- a/tests/test_plugins/test_protonmsg.py
++++ b/tests/test_plugins/test_protonmsg.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import six
+ import protonmsg
+ import tempfile
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ from mock import patch, MagicMock
+ from koji.context import context
+diff --git a/tests/test_plugins/test_runroot_builder.py b/tests/test_plugins/test_runroot_builder.py
+index 014cb00ce75a..24998cbe9f67 100644
+--- a/tests/test_plugins/test_runroot_builder.py
++++ b/tests/test_plugins/test_runroot_builder.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import copy
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import six.moves.configparser
+ 
+diff --git a/tests/test_plugins/test_runroot_cli.py b/tests/test_plugins/test_runroot_cli.py
+index b002cc700349..17bb6df7ff34 100644
+--- a/tests/test_plugins/test_runroot_cli.py
++++ b/tests/test_plugins/test_runroot_cli.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import io
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ from . import load_plugin
+diff --git a/tests/test_plugins/test_runroot_hub.py b/tests/test_plugins/test_runroot_hub.py
+index dfae6057c08b..f78b2e0fbc77 100644
+--- a/tests/test_plugins/test_runroot_hub.py
++++ b/tests/test_plugins/test_runroot_hub.py
+@@ -1,9 +1,6 @@
+ from __future__ import absolute_import
+ import mock
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ import runroot_hub
+diff --git a/tests/test_plugins/test_save_failed_tree_builder.py b/tests/test_plugins/test_save_failed_tree_builder.py
+index 909e8a3f810d..920f60596c99 100644
+--- a/tests/test_plugins/test_save_failed_tree_builder.py
++++ b/tests/test_plugins/test_save_failed_tree_builder.py
+@@ -2,10 +2,7 @@ from __future__ import absolute_import
+ import mock
+ import os
+ import sys
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ # alter pythonpath to not load hub plugin
+ sys.path = [os.path.join(os.path.dirname(__file__), '../../plugins/builder')] + sys.path
+diff --git a/tests/test_plugins/test_save_failed_tree_cli.py b/tests/test_plugins/test_save_failed_tree_cli.py
+index 452c7f8f9b70..07d30a2dd29c 100644
+--- a/tests/test_plugins/test_save_failed_tree_cli.py
++++ b/tests/test_plugins/test_save_failed_tree_cli.py
+@@ -1,10 +1,7 @@
+ from __future__ import absolute_import
+ import mock
+ import six
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ 
+diff --git a/tests/test_scm.py b/tests/test_scm.py
+index 5f1c668ae3d0..54b269100078 100644
+--- a/tests/test_scm.py
++++ b/tests/test_scm.py
+@@ -4,10 +4,7 @@ import mock
+ import shutil
+ import six
+ import tempfile
+-try:
+-    import unittest2 as unittest
+-except ImportError:
+-    import unittest
++import unittest
+ 
+ import koji
+ import koji.daemon
+-- 
+2.52.0
+

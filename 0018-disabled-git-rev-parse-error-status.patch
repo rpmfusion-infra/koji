@@ -1,0 +1,27 @@
+From ccc6c933235a8a37368c666c1c08fbb1f2724a53 Mon Sep 17 00:00:00 2001
+From: Nicolas Chauvet <kwizart@gmail.com>
+Date: Fri, 20 Sep 2024 08:46:24 +0200
+Subject: [PATCH 18/20] disabled git rev-parse error status
+
+---
+ koji/daemon.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/koji/daemon.py b/koji/daemon.py
+index 0bf81939a3bb..84bef84db7c6 100644
+--- a/koji/daemon.py
++++ b/koji/daemon.py
+@@ -591,8 +591,8 @@ class SCM(object):
+                                     cwd=self.sourcedir,)
+             out, _ = proc.communicate()
+             status = proc.wait()
+-            if status != 0:
+-                raise koji.GenericError('Error getting commit hash for git')
++            #if status != 0:
++            #    raise koji.GenericError('Error getting commit hash for git')
+             fragment = out.strip()
+             if six.PY3:
+                 fragment = fragment.decode()
+-- 
+2.52.0
+

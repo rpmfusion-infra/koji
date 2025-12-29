@@ -1,0 +1,56 @@
+From c971c0fccf3afce339044aa04ba8cf25d719f0e2 Mon Sep 17 00:00:00 2001
+From: Tomas Kopecek <tkopecek@redhat.com>
+Date: Thu, 15 Dec 2022 13:34:45 +0100
+Subject: [PATCH 16/20] Use old-style checkout for shortened refs
+
+Related: https://pagure.io/koji/issue/3629
+---
+ koji/daemon.py | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/koji/daemon.py b/koji/daemon.py
+index 6051039c69e7..0bf81939a3bb 100644
+--- a/koji/daemon.py
++++ b/koji/daemon.py
+@@ -412,6 +412,7 @@ class SCM(object):
+         sourcedir = '%s/%s' % (scmdir, self.module)
+ 
+         update_checkout_cmds = None
++        update_recovery_cmd = None
+         update_checkout_dir = None
+         env = None
+ 
+@@ -478,6 +479,7 @@ class SCM(object):
+                 ['git', 'fetch', 'origin', '%s:KOJI_FETCH_HEAD' % rev],
+                 ['git', 'reset', '--hard', 'KOJI_FETCH_HEAD']
+             ]
++            update_recovery_cmd = ['git', 'reset', '--hard', self.revision]
+             update_checkout_dir = sourcedir
+ 
+             # self.module may be empty, in which case the specfile should be in the top-level
+@@ -516,6 +518,7 @@ class SCM(object):
+                 ['git', 'fetch', 'origin', '%s:KOJI_FETCH_HEAD' % rev],
+                 ['git', 'reset', '--hard', 'KOJI_FETCH_HEAD']
+             ]
++            update_recovery_cmd = ['git', 'reset', '--hard', self.revision]
+             update_checkout_dir = sourcedir
+ 
+             # self.module may be empty, in which case the specfile should be in the top-level
+@@ -558,8 +561,12 @@ class SCM(object):
+                      chdir=update_checkout_dir, fatal=True)
+                 _run(['git', 'config', 'core.safecrlf', 'true'],
+                      chdir=update_checkout_dir, fatal=True)
+-            for cmd in update_checkout_cmds:
+-                _run(cmd, chdir=update_checkout_dir, fatal=True)
++            try:
++                for cmd in update_checkout_cmds:
++                    _run(cmd, chdir=update_checkout_dir, fatal=True)
++            except Exception:
++                # use old-style checkout, e.g. for shortened refs
++                _run(update_recovery_cmd, chdir=update_checkout_dir, fatal=True)
+ 
+         if self.use_common and not globals().get('KOJIKAMID'):
+             _run(common_checkout_cmd, chdir=scmdir, fatal=True)
+-- 
+2.52.0
+
