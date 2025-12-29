@@ -77,7 +77,7 @@
 
 Name: koji
 Version: 1.21.2
-Release: 2%{?dist}
+Release: 5%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -100,7 +100,12 @@ Patch10: 0011-Enable-fetching-any-ref-from-git-repo.patch
 Patch11: 0012-rpmdiff-replace-deprecated-rpm-call.patch
 Patch12: 0013-alternate-approach.patch
 Patch13: 0014-Emulate-old-list-data.patch
-Patch14: 0015-Change-PYVER-implementation.patch
+Patch14: 0015-exception-in-case-origin-is-part-of-ref.patch
+Patch15: 0016-Use-old-style-checkout-for-shortened-refs.patch
+Patch16: 0017-Change-PYVER-implementation.patch
+Patch17: 0018-disabled-git-rev-parse-error-status.patch
+Patch18: 0019-remove-unittest2.patch
+Patch19: 0020-work-around-nfs-glitch-in-ensuredir.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -731,6 +736,13 @@ fi
 %endif
 
 %changelog
+* Mon Dec 29 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-5
+- Backport workaround NFS gliches
+
+* Thu Jul 31 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-4
+- Rebase patches
+- Added the git hash HACK
+
 * Wed Jul 30 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-2
 - Rebase to 1.21.2
 - Apply previous patches
