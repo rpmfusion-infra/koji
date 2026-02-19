@@ -77,7 +77,7 @@
 
 Name: koji
 Version: 1.21.2
-Release: 6%{?dist}
+Release: 8%{?dist}
 # the included arch lib from yum's rpmUtils is GPLv2+
 License: LGPLv2 and GPLv2+
 Summary: Build system tools
@@ -106,6 +106,7 @@ Patch16: 0017-Change-PYVER-implementation.patch
 Patch17: 0018-disabled-git-rev-parse-error-status.patch
 Patch18: 0019-remove-unittest2.patch
 Patch19: 0020-work-around-nfs-glitch-in-ensuredir.patch
+Patch20: 0021-Use-dnf5-compatible-group-install-command.patch
 
 # Not upstreamable
 Patch100: fedora-config.patch
@@ -751,6 +752,9 @@ fi
 %endif
 
 %changelog
+* Thu Feb 19 2026 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-8
+- Add dnf5 compatible groupinstall
+
 * Mon Dec 29 2025 Nicolas Chauvet <kwizart@gmail.com> - 1.21.2-6
 - Backport workaround NFS gliches
 
